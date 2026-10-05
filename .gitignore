@@ -1,0 +1,28 @@
+# Build outputs
+**/bin/
+**/obj/
+**/*-bin/
+
+# Benchmark scratch data and old experiments
+Benchmark/experiments/
+Benchmark/results/*
+!Benchmark/results/route-dependency-v42-current/
+Benchmark/results/route-dependency-v42-current/*
+!Benchmark/results/route-dependency-v42-current/*.csv
+!Benchmark/results/route-dependency-v42-current/*.md
+!Benchmark/results/route-dependency-v42-current/summary.json
+!Benchmark/results/route-dependency-v42-current/*audit.json
+
+# Local IDE settings and secrets
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+.env
+.env.*
+*.pfx
+*.pem
+*.key
+Thumbs.db
+Desktop.ini
