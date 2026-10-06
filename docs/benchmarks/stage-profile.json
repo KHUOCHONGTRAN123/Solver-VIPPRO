@@ -1,0 +1,101 @@
+{
+  "method": "Representative level206 initial state; reflection overhead included; allocation hotspot attribution, not acceptance timing. Replay uses level1.",
+  "rows": [
+    {
+      "mode": "reference",
+      "stage": "parse",
+      "timeMs": 19.1131,
+      "allocatedBytes": 183680
+    },
+    {
+      "mode": "reference",
+      "stage": "validation",
+      "timeMs": 4.4998,
+      "allocatedBytes": 12768
+    },
+    {
+      "mode": "reference",
+      "stage": "precompute",
+      "timeMs": 5.1985,
+      "allocatedBytes": 114656
+    },
+    {
+      "mode": "reference",
+      "stage": "prepare",
+      "timeMs": 3.1762,
+      "allocatedBytes": 33552
+    },
+    {
+      "mode": "reference",
+      "stage": "generate",
+      "timeMs": 1.8281,
+      "allocatedBytes": 8136
+    },
+    {
+      "mode": "reference",
+      "stage": "rank_candidates",
+      "timeMs": 13.1695,
+      "allocatedBytes": 394624
+    },
+    {
+      "mode": "reference",
+      "stage": "continuation_guards",
+      "timeMs": 38.8584,
+      "allocatedBytes": 303032
+    },
+    {
+      "mode": "reference",
+      "stage": "replay_fixture",
+      "timeMs": 0.615,
+      "allocatedBytes": 53624
+    },
+    {
+      "mode": "optimized",
+      "stage": "parse",
+      "timeMs": 8.7542,
+      "allocatedBytes": 181464
+    },
+    {
+      "mode": "optimized",
+      "stage": "validation",
+      "timeMs": 3.4754,
+      "allocatedBytes": 11928
+    },
+    {
+      "mode": "optimized",
+      "stage": "precompute",
+      "timeMs": 3.5155,
+      "allocatedBytes": 59056
+    },
+    {
+      "mode": "optimized",
+      "stage": "prepare",
+      "timeMs": 2.6181,
+      "allocatedBytes": 12504
+    },
+    {
+      "mode": "optimized",
+      "stage": "generate",
+      "timeMs": 2.0148,
+      "allocatedBytes": 6952
+    },
+    {
+      "mode": "optimized",
+      "stage": "rank_candidates",
+      "timeMs": 6.9961,
+      "allocatedBytes": 71848
+    },
+    {
+      "mode": "optimized",
+      "stage": "continuation_guards",
+      "timeMs": 42.5562,
+      "allocatedBytes": 154544
+    },
+    {
+      "mode": "optimized",
+      "stage": "replay_fixture",
+      "timeMs": 38.766,
+      "allocatedBytes": 1461400
+    }
+  ]
+}

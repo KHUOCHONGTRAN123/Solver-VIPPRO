@@ -26,3 +26,22 @@ Benchmark/results/route-dependency-v42-current/*
 *.key
 Thumbs.db
 Desktop.ini
+
+# Solver 1.0 generated verification and release files
+artifacts/
+Verification/results/
+Verification/*-bin/
+Verification/frozen-v1/
+Verification/probe*.json
+Verification/cli-*.json
+Verification/UnitySmoke/Library/
+Verification/UnitySmoke/Temp/
+Verification/UnitySmoke/Logs/
+Verification/UnitySmoke/obj/
+Verification/UnitySmoke/Assets/Plugins/
+Verification/UnitySmoke/**/*.meta
+Verification/UnitySmoke/ProjectSettings/*
+!Verification/UnitySmoke/ProjectSettings/ProjectVersion.txt
+Verification/UnitySmoke/Packages/packages-lock.json
+Verification/UnitySmoke/*.log
+Verification/UnitySmoke/*.json
