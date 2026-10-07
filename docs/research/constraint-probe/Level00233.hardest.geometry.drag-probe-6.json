@@ -1,0 +1,41 @@
+{
+  "method": "Whole-drag endpoint SAT with BFS reachability cuts; one phase; no independent engine replay; not acceptance",
+  "geometrySha256": "d2f8bb572bd924d67ff5ad934c88c12464db6429b318357cd4142d28ece57241",
+  "scriptSha256": "756a8121e59185be7282dbc5328946b740bc6dd0159425b7d6dc2d99ca865d11",
+  "z3Version": "5.1.0",
+  "pythonVersion": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "rows": [
+    {
+      "drags": 6,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 0,
+      "checks": 1,
+      "phaseMs": 230.81850004382432,
+      "totalMs": 3490.254799951799,
+      "statistics": "(:max-memory              66.22\n :memory                  66.22\n :num-allocs              410840173\n :rlimit-count            2674833\n :sat-backjumps           106\n :sat-conflicts           106\n :sat-decisions           291\n :sat-del-clause          784\n :sat-elim-clauses        304\n :sat-elim-literals       139058\n :sat-minimized-lits      1050\n :sat-mk-clause-2ary      124641\n :sat-mk-clause-nary      41450\n :sat-mk-var              13008\n :sat-propagations-2ary   44787\n :sat-propagations-nary   17228\n :sat-scc-elim-binary     216\n :sat-scc-elim-vars       21\n :sat-subs-resolution     132216\n :sat-subs-resolution-dyn 100\n :sat-subsumed            38\n :sat-units               158\n :time                    0.23)"
+    },
+    {
+      "drags": 7,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 0,
+      "checks": 2,
+      "phaseMs": 240.67460000514984,
+      "totalMs": 4283.368000003975,
+      "statistics": "(:max-memory              72.72\n :memory                  72.72\n :num-allocs              946019837\n :rlimit-count            3347069\n :sat-backjumps           310\n :sat-conflicts           310\n :sat-decisions           1793\n :sat-del-clause          2371\n :sat-elim-clauses        1681\n :sat-elim-literals       235348\n :sat-minimized-lits      3789\n :sat-mk-clause-2ary      148391\n :sat-mk-clause-nary      48891\n :sat-mk-var              15359\n :sat-propagations-2ary   195455\n :sat-propagations-nary   75287\n :sat-scc-elim-binary     357\n :sat-scc-elim-vars       24\n :sat-subs-resolution     219333\n :sat-subs-resolution-dyn 765\n :sat-subsumed            131\n :sat-units               409\n :time                    0.24)"
+    },
+    {
+      "drags": 8,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 0,
+      "checks": 3,
+      "phaseMs": 242.31619999045506,
+      "totalMs": 5073.545199993532,
+      "statistics": "(:max-memory              76.40\n :memory                  76.40\n :num-allocs              1695252803\n :rlimit-count            4019767\n :sat-backjumps           457\n :sat-conflicts           457\n :sat-decisions           2427\n :sat-del-clause          3081\n :sat-elim-clauses        2348\n :sat-elim-literals       260970\n :sat-minimized-lits      5603\n :sat-mk-clause-2ary      172205\n :sat-mk-clause-nary      56280\n :sat-mk-var              17710\n :sat-propagations-2ary   336634\n :sat-propagations-nary   130646\n :sat-scc-elim-binary     515\n :sat-scc-elim-vars       53\n :sat-subs-resolution     240859\n :sat-subs-resolution-dyn 1174\n :sat-subsumed            136\n :sat-units               530\n :time                    0.24)"
+    }
+  ],
+  "witness": null
+}

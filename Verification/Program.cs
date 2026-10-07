@@ -7,6 +7,15 @@ using Reference = CatDom.Reference.V42;
 using ReferenceJson = CatDom.Reference.V42.IO.SolverJson;
 
 string root = Path.GetFullPath(args.Length > 1 ? args[1] : ".");
+if(args.Length>0&&args[0]=="budget-5000"){EasyComparison.Run(root,true);return;}
+if(args.Length>0&&args[0]=="hybrid-check"){HybridVerification.Run(root);return;}
+if(args.Length>0&&args[0]=="easy-comparison"){EasyComparison.Run(root);return;}
+if(args.Length>0&&args[0]=="route-graph-tests"){RouteGraphTests.Run(root);return;}
+if(args.Length>0&&args[0]=="phase-search"){PhaseSearch.Run(root,args[2],args[3],args.Length>4?int.Parse(args[4]):10000);return;}
+if(args.Length>0&&args[0]=="phase-fixture"){PhaseFixture.Run(root,args[2],args[3],int.Parse(args[4]));return;}
+if(args.Length>0&&args[0]=="constraint-probe"){ConstraintProbe.Run(root,args[2],args.Length>3&&args[3]=="hardest");return;}
+if(args.Length>0&&args[0]=="research-acceptance"){ResearchAcceptance.Run(root,args[2],args.Length>3?args[3]:"current",args.Length>4?args[4]:null);return;}
+if(args.Length>0&&args[0]=="research"){ResearchBenchmark.Run(root,args.Length>2?args[2]:"baseline",args.Length>3&&args[3]!="all"?args[3]:null,args.Length>4?long.Parse(args[4]):150000);return;}
 if(args.Length>0&&args[0]=="profile"){StageProfile.Run(root);return;}
 if(args.Length>0 && args[0]=="worker")
 {
@@ -90,6 +99,7 @@ if(args.Length>0 && args[0]=="all")
     Console.WriteLine("PASS 299-level differential and performance runs");return;
 }
 var random=new Random(42);
+HybridTests.Run(root);
 CheckpointTests.Run(root);
 RouteTests.Run();
 var heap=new Product.StableMinHeap<int>();

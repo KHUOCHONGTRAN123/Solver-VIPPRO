@@ -1,0 +1,37 @@
+{
+  "measurementKind": "Single diagnostic phase; capped search; not a full-level solve or acceptance",
+  "fixture": "Level00233.pattern-tier-all.137.input.json",
+  "fixtureHash": "838A44C3CA4C713F4EA10831CC7BDD5644555E3D6CFEDE08CD79AB807D95C20E",
+  "assemblyHash": "D90C4A0DB26A18903F35C8F1399F2DF07EBF46F803C4B83B47274576B274F2DB",
+  "method": "target",
+  "limit": 10000,
+  "cancelled": false,
+  "found": false,
+  "replayed": false,
+  "expanded": 129,
+  "abstractExpanded": 0,
+  "phaseMs": 273.4132,
+  "drags": 0,
+  "steps": 0,
+  "trace": [
+    {
+      "expanded": 0,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-target-1-43-4",
+      "ms": 141.0628
+    },
+    {
+      "expanded": 64,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-target-5-47-4",
+      "ms": 230.6816
+    },
+    {
+      "expanded": 128,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-target-13-46-4",
+      "ms": 273.2391
+    }
+  ],
+  "moves": []
+}

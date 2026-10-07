@@ -1,0 +1,63 @@
+{
+  "method": "One initial phase, unit-step symbolic encoding; no independent replay; not acceptance",
+  "z3Version": "5.1.0",
+  "geometry": "Level00206.hardest.geometry.json",
+  "rows": [
+    {
+      "steps": 1,
+      "status": "unknown",
+      "checkMs": 509.0995999635197,
+      "totalMs": 690.478099975735,
+      "statistics": "(:added-eqs           23156\n :arith-eq-adapter    12\n :arith-diseq         22\n :arith-lower         18\n :arith-make-feasible 3\n :arith-max-columns   57\n :arith-upper         7\n :array-ax1           40\n :array-ax2           81\n :array-def-const     1\n :array-sel-const     5\n :binary-propagations 11586\n :bv-bit2core         683838\n :bv-diseqs           5400\n :bv-dynamic-diseqs   17\n :bv->core-eq         1620\n :conflicts           121\n :decisions           19012\n :del-clause          17\n :max-memory          24.86\n :memory              24.86\n :mk-bool-var         16631\n :mk-clause           4931\n :mk-clause-binary    10431\n :num-allocs          5478897\n :num-checks          1\n :propagations        21798\n :rlimit-count        1671626\n :time                0.51)"
+    },
+    {
+      "steps": 2,
+      "status": "unknown",
+      "checkMs": 502.473300031852,
+      "totalMs": 1347.4731999449432,
+      "statistics": "(:added-eqs           104567\n :arith-eq-adapter    24\n :arith-diseq         1262\n :arith-lower         960\n :arith-make-feasible 109\n :arith-max-columns   58\n :arith-upper         294\n :array-ax1           49\n :array-ax2           174\n :array-def-const     1\n :array-sel-const     10\n :binary-propagations 100088\n :bv-bit2core         1232674\n :bv-diseqs           10800\n :bv-dynamic-diseqs   426\n :bv-dynamic-eqs      5\n :bv->core-eq         5735\n :conflicts           334\n :decisions           73586\n :del-clause          23055\n :max-memory          32.73\n :memory              32.73\n :minimized-lits      74\n :mk-bool-var         57430\n :mk-clause           34188\n :mk-clause-binary    23679\n :num-allocs          119185734\n :num-checks          2\n :propagations        144561\n :restarts            2\n :rlimit-count        3795861\n :time                0.50)"
+    },
+    {
+      "steps": 3,
+      "status": "unknown",
+      "checkMs": 513.773399987258,
+      "totalMs": 2018.6737999902107,
+      "statistics": "(:added-eqs           174073\n :arith-eq-adapter    36\n :arith-diseq         2988\n :arith-lower         2026\n :arith-make-feasible 201\n :arith-max-columns   59\n :arith-upper         989\n :array-ax1           57\n :array-ax2           278\n :array-def-const     1\n :array-sel-const     15\n :binary-propagations 159096\n :bv-bit2core         1684774\n :bv-diseqs           16128\n :bv-dynamic-diseqs   672\n :bv-dynamic-eqs      5\n :bv->core-eq         7031\n :conflicts           574\n :decisions           83816\n :del-clause          44682\n :max-memory          40.28\n :memory              40.28\n :minimized-lits      99\n :mk-bool-var         93265\n :mk-clause           61140\n :mk-clause-binary    36898\n :num-allocs          278284436\n :num-checks          3\n :propagations        227991\n :restarts            4\n :rlimit-count        5095842\n :time                0.51)"
+    },
+    {
+      "steps": 4,
+      "status": "unknown",
+      "checkMs": 514.0817000064999,
+      "totalMs": 2692.095199949108,
+      "statistics": "(:added-eqs           224804\n :arith-eq-adapter    48\n :arith-diseq         3862\n :arith-lower         2520\n :arith-make-feasible 247\n :arith-max-columns   60\n :arith-upper         1400\n :array-ax1           62\n :array-ax2           390\n :array-def-const     1\n :array-sel-const     20\n :binary-propagations 216680\n :bv-bit2core         2090147\n :bv-diseqs           21384\n :bv-dynamic-diseqs   780\n :bv-dynamic-eqs      7\n :bv->core-eq         8217\n :conflicts           700\n :decisions           93568\n :del-clause          57345\n :max-memory          47.69\n :memory              47.69\n :minimized-lits      110\n :mk-bool-var         125498\n :mk-clause           80465\n :mk-clause-binary    50097\n :num-allocs          508815798\n :num-checks          4\n :propagations        301880\n :restarts            5\n :rlimit-count        6257241\n :time                0.51)"
+    },
+    {
+      "steps": 5,
+      "status": "unknown",
+      "checkMs": 505.90180000290275,
+      "totalMs": 3366.675899946131,
+      "statistics": "(:added-eqs           278449\n :arith-eq-adapter    60\n :arith-diseq         4774\n :arith-lower         2858\n :arith-make-feasible 320\n :arith-max-columns   61\n :arith-upper         1971\n :array-ax1           67\n :array-ax2           510\n :array-def-const     1\n :array-sel-const     25\n :binary-propagations 271386\n :bv-bit2core         2468965\n :bv-diseqs           26640\n :bv-dynamic-diseqs   1131\n :bv-dynamic-eqs      7\n :bv->core-eq         9994\n :conflicts           753\n :decisions           104862\n :del-clause          73278\n :max-memory          66.14\n :memory              62.73\n :minimized-lits      201\n :mk-bool-var         158308\n :mk-clause           101212\n :mk-clause-binary    63278\n :num-allocs          778515755\n :num-checks          5\n :propagations        375078\n :restarts            5\n :rlimit-count        7391225\n :time                0.51)"
+    },
+    {
+      "steps": 6,
+      "status": "unknown",
+      "checkMs": 501.0615999926813,
+      "totalMs": 4027.742199948989,
+      "statistics": "(:added-eqs           338263\n :arith-eq-adapter    72\n :arith-diseq         5582\n :arith-lower         3214\n :arith-make-feasible 368\n :arith-max-columns   62\n :arith-upper         2428\n :array-ax1           72\n :array-ax2           638\n :array-def-const     1\n :array-sel-const     30\n :binary-propagations 343797\n :bv-bit2core         2808994\n :bv-diseqs           31896\n :bv-dynamic-diseqs   2085\n :bv-dynamic-eqs      10\n :bv->core-eq         11738\n :conflicts           842\n :decisions           118226\n :del-clause          93588\n :max-memory          70.41\n :memory              70.41\n :minimized-lits      211\n :mk-bool-var         195159\n :mk-clause           128009\n :mk-clause-binary    76441\n :num-allocs          1094994480\n :num-checks          6\n :propagations        466041\n :restarts            5\n :rlimit-count        8500343\n :time                0.50)"
+    },
+    {
+      "steps": 7,
+      "status": "unknown",
+      "checkMs": 507.97430000966415,
+      "totalMs": 4699.041899992153,
+      "statistics": "(:added-eqs           502346\n :arith-eq-adapter    84\n :arith-diseq         10356\n :arith-lower         5410\n :arith-make-feasible 617\n :arith-max-columns   63\n :arith-upper         5001\n :array-ax1           77\n :array-ax2           774\n :array-def-const     1\n :array-sel-const     35\n :binary-propagations 464039\n :bv-bit2core         3231810\n :bv-diseqs           37152\n :bv-dynamic-diseqs   2932\n :bv-dynamic-eqs      12\n :bv->core-eq         14892\n :conflicts           1040\n :decisions           130417\n :del-clause          109397\n :max-memory          75.92\n :memory              75.92\n :minimized-lits      220\n :mk-bool-var         229437\n :mk-clause           148724\n :mk-clause-binary    89586\n :num-allocs          1316194639\n :num-checks          7\n :propagations        615143\n :restarts            6\n :rlimit-count        9970206\n :time                0.51)"
+    },
+    {
+      "steps": 8,
+      "status": "unknown",
+      "checkMs": 504.4614999787882,
+      "totalMs": 5372.009499988053,
+      "statistics": "(:added-eqs           567916\n :arith-eq-adapter    96\n :arith-diseq         11880\n :arith-lower         6282\n :arith-make-feasible 677\n :arith-max-columns   64\n :arith-upper         5650\n :array-ax1           82\n :array-ax2           918\n :array-def-const     1\n :array-sel-const     40\n :binary-propagations 517879\n :bv-bit2core         3560848\n :bv-diseqs           42408\n :bv-dynamic-diseqs   3255\n :bv-dynamic-eqs      12\n :bv->core-eq         16091\n :conflicts           1200\n :decisions           138846\n :del-clause          110747\n :max-memory          86.51\n :memory              86.51\n :minimized-lits      1101\n :mk-bool-var         254572\n :mk-clause           155966\n :mk-clause-binary    102713\n :num-allocs          1719654910\n :num-checks          8\n :propagations        682683\n :restarts            7\n :rlimit-count        10969958\n :time                0.50)"
+    }
+  ]
+}

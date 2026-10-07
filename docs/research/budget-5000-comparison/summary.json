@@ -1,0 +1,660 @@
+{
+  "method": "Release; sequential; own-level warm-up; three samples; alternate mode order; 10s diagnostic cancellation; allocation current thread includes API solve, excludes serialize/audit; GC before sample; no per-level process RAM isolation",
+  "count": 11,
+  "baselineHash": "C0A95EF04326B80061E51B5F5CB6D62282F452699BE356E60CB367152DC40F46",
+  "currentHash": "0C6E602FE0697BA56A3A9CE8BF3CCC49286B17949828680A603EDCDA473E8429",
+  "referenceHash": "4EFE305CAA65CDEFAB5E4C23BDB633DB86C733261E93506510183058073321E2",
+  "runtime": "10.0.10",
+  "machine": "DESKTOP-696B4JC",
+  "reports": [
+    {
+      "level": "Level00056",
+      "levelHash": "EF90E87BF8B6FF9B24B847F3C0E1CE33C1084461ABEA9227D73A930C1BE6AD73",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 6457,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 1457,
+              "solveTimeMs": 603.4862,
+              "allocatedBytes": 118770112,
+              "gen0": 18,
+              "gen1": 11,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 87,
+              "steps": 344,
+              "planHash": "04CDFDE152DD8FA878ECE1E6DFD547E7EE75F08238B3D66A592BD7042B65B71B"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 6457,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 1457,
+              "solveTimeMs": 562.0674,
+              "allocatedBytes": 118770112,
+              "gen0": 18,
+              "gen1": 9,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 87,
+              "steps": 344,
+              "planHash": "04CDFDE152DD8FA878ECE1E6DFD547E7EE75F08238B3D66A592BD7042B65B71B"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 6457,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 1457,
+              "solveTimeMs": 474.4194,
+              "allocatedBytes": 118768640,
+              "gen0": 18,
+              "gen1": 10,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 87,
+              "steps": 344,
+              "planHash": "04CDFDE152DD8FA878ECE1E6DFD547E7EE75F08238B3D66A592BD7042B65B71B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00106",
+      "levelHash": "B7096EC7DAAF439E858254A60067DA83C282555A23B9A66A21B3AA411171AC96",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 9364,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4364,
+              "solveTimeMs": 695.841,
+              "allocatedBytes": 180047648,
+              "gen0": 31,
+              "gen1": 17,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 128,
+              "steps": 414,
+              "planHash": "BB9D0135F2C13105463B8FFBA205C55208E3915ACD6EFF22A21C9930B9515735"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 9364,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4364,
+              "solveTimeMs": 754.0666,
+              "allocatedBytes": 180056632,
+              "gen0": 30,
+              "gen1": 15,
+              "gen2": 4,
+              "replayed": true,
+              "moves": 128,
+              "steps": 414,
+              "planHash": "BB9D0135F2C13105463B8FFBA205C55208E3915ACD6EFF22A21C9930B9515735"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 9364,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4364,
+              "solveTimeMs": 706.3477,
+              "allocatedBytes": 180049216,
+              "gen0": 30,
+              "gen1": 15,
+              "gen2": 4,
+              "replayed": true,
+              "moves": 128,
+              "steps": 414,
+              "planHash": "BB9D0135F2C13105463B8FFBA205C55208E3915ACD6EFF22A21C9930B9515735"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00109",
+      "levelHash": "D22FA0BACD012C317236EBD00483062CF988823401BDF3DC4145429AC725C186",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 10839,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5839,
+              "solveTimeMs": 821.0364,
+              "allocatedBytes": 277644320,
+              "gen0": 42,
+              "gen1": 20,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 94,
+              "steps": 361,
+              "planHash": "FFAED3FFE813851D09393E6D8BF6D117082EFEBF211CF2B1C1A6772CC36F3C4C"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 10839,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5839,
+              "solveTimeMs": 809.3078,
+              "allocatedBytes": 277648416,
+              "gen0": 44,
+              "gen1": 26,
+              "gen2": 7,
+              "replayed": true,
+              "moves": 94,
+              "steps": 361,
+              "planHash": "FFAED3FFE813851D09393E6D8BF6D117082EFEBF211CF2B1C1A6772CC36F3C4C"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 10839,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5839,
+              "solveTimeMs": 870.9419,
+              "allocatedBytes": 277645928,
+              "gen0": 44,
+              "gen1": 25,
+              "gen2": 7,
+              "replayed": true,
+              "moves": 94,
+              "steps": 361,
+              "planHash": "FFAED3FFE813851D09393E6D8BF6D117082EFEBF211CF2B1C1A6772CC36F3C4C"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00133",
+      "levelHash": "3E9FCB3C563E02A10D11EB10B0039A99F4B2306DC22E82060734018C3A0FD988",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Cancelled",
+              "expanded": 48299,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 43299,
+              "solveTimeMs": 10012.1754,
+              "allocatedBytes": 1237916024,
+              "gen0": 219,
+              "gen1": 113,
+              "gen2": 29,
+              "replayed": false,
+              "moves": 93,
+              "steps": 237,
+              "planHash": "8D9F78D70128D729BB44D867D75FF33975BBC3ED9AC1F917AA4B53FE1097F5F6"
+            },
+            {
+              "iteration": 1,
+              "status": "Cancelled",
+              "expanded": 47815,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 42815,
+              "solveTimeMs": 10001.9876,
+              "allocatedBytes": 1220307528,
+              "gen0": 218,
+              "gen1": 113,
+              "gen2": 31,
+              "replayed": false,
+              "moves": 93,
+              "steps": 237,
+              "planHash": "8D9F78D70128D729BB44D867D75FF33975BBC3ED9AC1F917AA4B53FE1097F5F6"
+            },
+            {
+              "iteration": 2,
+              "status": "Cancelled",
+              "expanded": 47844,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 42844,
+              "solveTimeMs": 10011.7743,
+              "allocatedBytes": 1221326040,
+              "gen0": 218,
+              "gen1": 113,
+              "gen2": 31,
+              "replayed": false,
+              "moves": 93,
+              "steps": 237,
+              "planHash": "8D9F78D70128D729BB44D867D75FF33975BBC3ED9AC1F917AA4B53FE1097F5F6"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00145",
+      "levelHash": "24F7F7140B38BAD373176FDE4FA3BDE489106510F57391D5409575639066F80F",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 13711,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 8711,
+              "solveTimeMs": 794.0508,
+              "allocatedBytes": 257683168,
+              "gen0": 43,
+              "gen1": 18,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 159,
+              "steps": 379,
+              "planHash": "314426998238CE0800EA9E07EEF89B0CE05FA0A89C7909FAE97BCCB3170E4534"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 13711,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 8711,
+              "solveTimeMs": 768.6173,
+              "allocatedBytes": 257689856,
+              "gen0": 42,
+              "gen1": 19,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 159,
+              "steps": 379,
+              "planHash": "314426998238CE0800EA9E07EEF89B0CE05FA0A89C7909FAE97BCCB3170E4534"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 13711,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 8711,
+              "solveTimeMs": 790.4432,
+              "allocatedBytes": 257683256,
+              "gen0": 42,
+              "gen1": 19,
+              "gen2": 5,
+              "replayed": true,
+              "moves": 159,
+              "steps": 379,
+              "planHash": "314426998238CE0800EA9E07EEF89B0CE05FA0A89C7909FAE97BCCB3170E4534"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00165",
+      "levelHash": "47C731EB787AC3067CB5A7000A749F29CAEABCB05727525972F86C39E3577330",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 10183,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5183,
+              "solveTimeMs": 1040.8968,
+              "allocatedBytes": 303990176,
+              "gen0": 52,
+              "gen1": 19,
+              "gen2": 8,
+              "replayed": true,
+              "moves": 111,
+              "steps": 334,
+              "planHash": "A68705AB1AB83266A2C91016F32F25176BAE61F56C02B4E8A538B609F60A3FF1"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 10183,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5183,
+              "solveTimeMs": 1010.4647,
+              "allocatedBytes": 303988928,
+              "gen0": 50,
+              "gen1": 19,
+              "gen2": 7,
+              "replayed": true,
+              "moves": 111,
+              "steps": 334,
+              "planHash": "A68705AB1AB83266A2C91016F32F25176BAE61F56C02B4E8A538B609F60A3FF1"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 10183,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 5183,
+              "solveTimeMs": 1004.4361,
+              "allocatedBytes": 303985752,
+              "gen0": 50,
+              "gen1": 19,
+              "gen2": 7,
+              "replayed": true,
+              "moves": 111,
+              "steps": 334,
+              "planHash": "A68705AB1AB83266A2C91016F32F25176BAE61F56C02B4E8A538B609F60A3FF1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00179",
+      "levelHash": "8A3851DDD1E2D6CF3E7DB89B5AFB84A43D0BBC4F4D45D7015DDDFD83086F3EF4",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 9785,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4785,
+              "solveTimeMs": 2352.7198,
+              "allocatedBytes": 754565816,
+              "gen0": 129,
+              "gen1": 52,
+              "gen2": 17,
+              "replayed": true,
+              "moves": 119,
+              "steps": 390,
+              "planHash": "AD00E81A06FBA275017AE96062A356B1CE967440A03F8E5C7C11A8B11DB38F9B"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 9785,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4785,
+              "solveTimeMs": 2411.1936,
+              "allocatedBytes": 754559648,
+              "gen0": 130,
+              "gen1": 54,
+              "gen2": 17,
+              "replayed": true,
+              "moves": 119,
+              "steps": 390,
+              "planHash": "AD00E81A06FBA275017AE96062A356B1CE967440A03F8E5C7C11A8B11DB38F9B"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 9785,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 4785,
+              "solveTimeMs": 2414.9884,
+              "allocatedBytes": 754562032,
+              "gen0": 130,
+              "gen1": 54,
+              "gen2": 17,
+              "replayed": true,
+              "moves": 119,
+              "steps": 390,
+              "planHash": "AD00E81A06FBA275017AE96062A356B1CE967440A03F8E5C7C11A8B11DB38F9B"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00196",
+      "levelHash": "5020A59EA7AAC9522B79FF03203EA5F91DDCC880E4246B4A2B158FAF81F24A89",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 38458,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 33458,
+              "solveTimeMs": 6263.9802,
+              "allocatedBytes": 1420864240,
+              "gen0": 253,
+              "gen1": 117,
+              "gen2": 32,
+              "replayed": true,
+              "moves": 132,
+              "steps": 286,
+              "planHash": "3EC94672F11963310483F1C9E3CFC85438F495ECCF7698378955ED87C3259A29"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 38458,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 33458,
+              "solveTimeMs": 6554.0293,
+              "allocatedBytes": 1420874960,
+              "gen0": 255,
+              "gen1": 124,
+              "gen2": 33,
+              "replayed": true,
+              "moves": 132,
+              "steps": 286,
+              "planHash": "3EC94672F11963310483F1C9E3CFC85438F495ECCF7698378955ED87C3259A29"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 38458,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 33458,
+              "solveTimeMs": 6521.2745,
+              "allocatedBytes": 1420883344,
+              "gen0": 254,
+              "gen1": 124,
+              "gen2": 32,
+              "replayed": true,
+              "moves": 132,
+              "steps": 286,
+              "planHash": "3EC94672F11963310483F1C9E3CFC85438F495ECCF7698378955ED87C3259A29"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00203",
+      "levelHash": "9CA1EC26225ABAE38594F8A38578925F6B3B71CB9EFF96E14C16B52EDE533E63",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 7668,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2668,
+              "solveTimeMs": 831.6099,
+              "allocatedBytes": 273364320,
+              "gen0": 45,
+              "gen1": 12,
+              "gen2": 4,
+              "replayed": true,
+              "moves": 161,
+              "steps": 352,
+              "planHash": "7CFDC4832B86227F50D63EE7C1372CF97B7B3BD4D73AAA6E58923D9A608499AA"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 7668,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2668,
+              "solveTimeMs": 770.9108,
+              "allocatedBytes": 273363024,
+              "gen0": 45,
+              "gen1": 13,
+              "gen2": 4,
+              "replayed": true,
+              "moves": 161,
+              "steps": 352,
+              "planHash": "7CFDC4832B86227F50D63EE7C1372CF97B7B3BD4D73AAA6E58923D9A608499AA"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 7668,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2668,
+              "solveTimeMs": 822.8867,
+              "allocatedBytes": 273363064,
+              "gen0": 45,
+              "gen1": 13,
+              "gen2": 4,
+              "replayed": true,
+              "moves": 161,
+              "steps": 352,
+              "planHash": "7CFDC4832B86227F50D63EE7C1372CF97B7B3BD4D73AAA6E58923D9A608499AA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00229",
+      "levelHash": "07C41850AA8B1CF03317666703FC214624A5D3465C406C4F9C967DCF607ED7CD",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 7305,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2305,
+              "solveTimeMs": 685.1979,
+              "allocatedBytes": 173924096,
+              "gen0": 28,
+              "gen1": 9,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 115,
+              "steps": 347,
+              "planHash": "10CF695EC3BF383BEB7C68DDA1F53E8C29DDB7C0DFDCD654015FBA66C565CDF9"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 7305,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2305,
+              "solveTimeMs": 663.5613,
+              "allocatedBytes": 173915752,
+              "gen0": 28,
+              "gen1": 9,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 115,
+              "steps": 347,
+              "planHash": "10CF695EC3BF383BEB7C68DDA1F53E8C29DDB7C0DFDCD654015FBA66C565CDF9"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 7305,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2305,
+              "solveTimeMs": 722.254,
+              "allocatedBytes": 173916112,
+              "gen0": 28,
+              "gen1": 9,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 115,
+              "steps": 347,
+              "planHash": "10CF695EC3BF383BEB7C68DDA1F53E8C29DDB7C0DFDCD654015FBA66C565CDF9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "Level00286",
+      "levelHash": "8CB73A73E76E10362661622B11430750B3A517A06AB8B271D19EC758C0780AD8",
+      "modes": [
+        {
+          "mode": "hybrid5000",
+          "samples": [
+            {
+              "iteration": 0,
+              "status": "Solved",
+              "expanded": 7973,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2973,
+              "solveTimeMs": 581.9605,
+              "allocatedBytes": 127606008,
+              "gen0": 21,
+              "gen1": 11,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 118,
+              "steps": 319,
+              "planHash": "1480D1CABFDFD8A6E320AA720245A76B2DE9BF0834117209C5132C9160726C3F"
+            },
+            {
+              "iteration": 1,
+              "status": "Solved",
+              "expanded": 7973,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2973,
+              "solveTimeMs": 579.1375,
+              "allocatedBytes": 127608232,
+              "gen0": 22,
+              "gen1": 12,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 118,
+              "steps": 319,
+              "planHash": "1480D1CABFDFD8A6E320AA720245A76B2DE9BF0834117209C5132C9160726C3F"
+            },
+            {
+              "iteration": 2,
+              "status": "Solved",
+              "expanded": 7973,
+              "baselineExpanded": 5000,
+              "improvedExpanded": 2973,
+              "solveTimeMs": 574.1917,
+              "allocatedBytes": 127606120,
+              "gen0": 22,
+              "gen1": 12,
+              "gen2": 3,
+              "replayed": true,
+              "moves": 118,
+              "steps": 319,
+              "planHash": "1480D1CABFDFD8A6E320AA720245A76B2DE9BF0834117209C5132C9160726C3F"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

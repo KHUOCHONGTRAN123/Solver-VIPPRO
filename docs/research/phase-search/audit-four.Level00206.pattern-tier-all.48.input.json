@@ -1,0 +1,314 @@
+{
+  "measurementKind": "Single diagnostic phase; capped search; not a full-level solve or acceptance",
+  "fixture": "Level00206.pattern-tier-all.48.input.json",
+  "fixtureHash": "48C8F73BA9B01B7EC53F76A81A1D567DFA98CD34E3A55A005D3249AD143C0367",
+  "assemblyHash": "2DABA9C9BCF103A3DDE5882880B9A0D53095BDF72ACCD0CA5918C19EC2BEA560",
+  "method": "audit-four",
+  "limit": 10000,
+  "cancelled": false,
+  "found": false,
+  "replayed": false,
+  "expanded": 0,
+  "abstractExpanded": 27505,
+  "phaseMs": 172.8826,
+  "drags": 0,
+  "steps": 0,
+  "trace": [],
+  "auditRows": [
+    {
+      "target": 1,
+      "goals": 4,
+      "staticCost": 2,
+      "currentCost": 34,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 2,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 3,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ],
+      "triples": [],
+      "four": null
+    },
+    {
+      "target": 2,
+      "goals": 1,
+      "staticCost": 3,
+      "currentCost": 19,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 1,
+          "unreachable": false,
+          "distance": 2
+        },
+        {
+          "other": 3,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ],
+      "triples": [],
+      "four": {
+        "roots": [
+          2,
+          9,
+          1,
+          10
+        ],
+        "domains": [
+          7,
+          4,
+          3,
+          10
+        ],
+        "complete": true,
+        "initialDistance": 0
+      }
+    },
+    {
+      "target": 3,
+      "goals": 3,
+      "staticCost": 1,
+      "currentCost": 9,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 1,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 2,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ],
+      "triples": [],
+      "four": {
+        "roots": [
+          3,
+          10,
+          9,
+          2
+        ],
+        "domains": [
+          23,
+          10,
+          4,
+          7
+        ],
+        "complete": true,
+        "initialDistance": 2
+      }
+    },
+    {
+      "target": 9,
+      "goals": 1,
+      "staticCost": 1152921504606846975,
+      "currentCost": 1152921504606846975,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 1,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 2,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 3,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 4,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 5,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 7,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 8,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 10,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 11,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 12,
+          "unreachable": true,
+          "distance": 2147483647
+        }
+      ],
+      "triples": [],
+      "four": null
+    }
+  ],
+  "moves": []
+}

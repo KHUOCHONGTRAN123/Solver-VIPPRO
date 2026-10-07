@@ -1,0 +1,81 @@
+{
+  "method": "Whole-drag endpoint SAT with BFS reachability cuts; one phase; no independent engine replay; not acceptance",
+  "geometrySha256": "c9b32b18ef17f94a8b57a41298154f02a8382583e981a91c7b7a68ee69cd978f",
+  "scriptSha256": "d77b875d8f2253e9d25007f52384b24cd79567e4529826ee1b92e2bb1e763996",
+  "z3Version": "5.1.0",
+  "pythonVersion": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "rows": [
+    {
+      "drags": 1,
+      "status": "unsat",
+      "validGeometryWitness": false,
+      "cuts": 0,
+      "checks": 1,
+      "phaseMs": 2.3198999697342515,
+      "totalMs": 384.04089998221025,
+      "statistics": "(:max-memory              20.20\n :memory                  19.42\n :num-allocs              1818639\n :rlimit-count            231874\n :sat-backjumps           11\n :sat-conflicts           12\n :sat-decisions           15\n :sat-minimized-lits      8\n :sat-mk-clause-2ary      5412\n :sat-mk-clause-nary      3734\n :sat-mk-var              1109\n :sat-propagations-2ary   2059\n :sat-propagations-nary   1011\n :sat-subs-resolution-dyn 1\n :sat-units               84\n :time                    0.00)"
+    },
+    {
+      "drags": 2,
+      "status": "unsat",
+      "validGeometryWitness": false,
+      "cuts": 2,
+      "checks": 4,
+      "phaseMs": 57.88909998955205,
+      "totalMs": 822.9082999750972,
+      "statistics": "(:card2bv-rewrites        1\n :max-memory              22.75\n :memory                  22.51\n :num-allocs              9823224\n :rlimit-count            545613\n :sat-backjumps           43\n :sat-conflicts           45\n :sat-decisions           239\n :sat-minimized-lits      189\n :sat-mk-clause-2ary      22650\n :sat-mk-clause-nary      10174\n :sat-mk-var              3198\n :sat-propagations-2ary   17598\n :sat-propagations-nary   7783\n :sat-subs-resolution-dyn 12\n :sat-units               84\n :time                    0.01)"
+    },
+    {
+      "drags": 3,
+      "status": "unsat",
+      "validGeometryWitness": false,
+      "cuts": 7,
+      "checks": 7,
+      "phaseMs": 159.94270000373945,
+      "totalMs": 1367.6873999647796,
+      "statistics": "(:card2bv-rewrites        1\n :max-memory              27.80\n :memory                  27.80\n :num-allocs              39518269\n :rlimit-count            1090736\n :sat-backjumps           155\n :sat-conflicts           158\n :sat-decisions           631\n :sat-minimized-lits      895\n :sat-mk-clause-2ary      42483\n :sat-mk-clause-nary      24927\n :sat-mk-var              6749\n :sat-propagations-2ary   94088\n :sat-propagations-nary   58848\n :sat-subs-resolution-dyn 95\n :sat-units               144\n :time                    0.02)"
+    },
+    {
+      "drags": 4,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 11,
+      "checks": 10,
+      "phaseMs": 316.0638000117615,
+      "totalMs": 2097.8868000092916,
+      "statistics": "(:card2bv-rewrites        1\n :max-memory              36.13\n :memory                  33.26\n :num-allocs              228536036\n :rlimit-count            2526003\n :sat-backjumps           343\n :sat-conflicts           346\n :sat-decisions           1357\n :sat-del-clause          4088\n :sat-elim-clauses        3208\n :sat-elim-literals       64149\n :sat-minimized-lits      2427\n :sat-mk-clause-2ary      67139\n :sat-mk-clause-nary      34459\n :sat-mk-var              10504\n :sat-probing-assigned    929\n :sat-propagations-2ary   791708\n :sat-propagations-nary   276836\n :sat-scc-elim-binary     59\n :sat-scc-elim-vars       36\n :sat-subs-resolution     51712\n :sat-subs-resolution-dyn 435\n :sat-subsumed            1231\n :sat-units               1419\n :time                    0.21)"
+    },
+    {
+      "drags": 5,
+      "status": "unsat",
+      "validGeometryWitness": false,
+      "cuts": 22,
+      "checks": 15,
+      "phaseMs": 489.07720000715926,
+      "totalMs": 2976.54160001548,
+      "statistics": "(:max-memory              36.88\n :memory                  35.75\n :num-allocs              563914132\n :rlimit-count            4171622\n :sat-backjumps           654\n :sat-conflicts           658\n :sat-decisions           2375\n :sat-del-clause          11511\n :sat-elim-clauses        9394\n :sat-elim-literals       158701\n :sat-minimized-lits      4558\n :sat-mk-clause-2ary      87586\n :sat-mk-clause-nary      57176\n :sat-mk-var              15962\n :sat-probing-assigned    1251\n :sat-propagations-2ary   1521752\n :sat-propagations-nary   525408\n :sat-restarts            1\n :sat-scc-elim-binary     103\n :sat-scc-elim-vars       212\n :sat-subs-resolution     72391\n :sat-subs-resolution-dyn 892\n :sat-subsumed            2224\n :sat-units               5572\n :time                    0.02)"
+    },
+    {
+      "drags": 6,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 35,
+      "checks": 20,
+      "phaseMs": 707.1742999833077,
+      "totalMs": 4122.531100001652,
+      "statistics": "(:card2bv-rewrites        2\n :max-memory              55.20\n :memory                  48.86\n :num-allocs              1614564457\n :rlimit-count            6680429\n :sat-backjumps           1122\n :sat-conflicts           1126\n :sat-decisions           4204\n :sat-del-clause          16117\n :sat-elim-clauses        12736\n :sat-elim-literals       210844\n :sat-minimized-lits      8878\n :sat-mk-clause-2ary      113226\n :sat-mk-clause-nary      87014\n :sat-mk-var              23670\n :sat-probing-assigned    1746\n :sat-propagations-2ary   2593282\n :sat-propagations-nary   946152\n :sat-restarts            25\n :sat-scc-elim-binary     324\n :sat-scc-elim-vars       391\n :sat-subs-resolution     86956\n :sat-subs-resolution-dyn 1574\n :sat-subsumed            4992\n :sat-units               8014\n :time                    0.21)"
+    },
+    {
+      "drags": 7,
+      "status": "unknown",
+      "validGeometryWitness": false,
+      "cuts": 46,
+      "checks": 25,
+      "phaseMs": 719.0585000207648,
+      "totalMs": 5297.264099994209,
+      "statistics": "(:card2bv-rewrites        3\n :max-memory              58.63\n :memory                  54.61\n :num-allocs              3314709092\n :rlimit-count            9523101\n :sat-backjumps           2433\n :sat-conflicts           2437\n :sat-decisions           8121\n :sat-del-clause          20634\n :sat-elim-clauses        15671\n :sat-elim-literals       259092\n :sat-minimized-lits      26500\n :sat-mk-clause-2ary      141039\n :sat-mk-clause-nary      113698\n :sat-mk-var              31441\n :sat-probing-assigned    1857\n :sat-propagations-2ary   3904159\n :sat-propagations-nary   1482087\n :sat-restarts            103\n :sat-scc-elim-binary     515\n :sat-scc-elim-vars       661\n :sat-subs-resolution     100525\n :sat-subs-resolution-dyn 3987\n :sat-subsumed            7615\n :sat-units               9636\n :time                    0.21)"
+    }
+  ],
+  "witness": null
+}

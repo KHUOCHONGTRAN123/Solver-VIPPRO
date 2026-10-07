@@ -1,0 +1,126 @@
+{
+  "method": "One initial phase, unit-step symbolic encoding; no independent replay; not acceptance",
+  "z3Version": "5.1.0",
+  "geometry": "Level00206.hardest.geometry.json",
+  "rows": [
+    {
+      "steps": 1,
+      "status": "unsat",
+      "checkMs": 2.8475999715738,
+      "totalMs": 169.34930003480986,
+      "statistics": "(:max-memory            20.14\n :memory                19.36\n :num-allocs            1451797\n :rlimit-count          231889\n :sat-backjumps         4\n :sat-conflicts         5\n :sat-decisions         5\n :sat-minimized-lits    5\n :sat-mk-clause-2ary    5180\n :sat-mk-clause-nary    3723\n :sat-mk-var            1101\n :sat-propagations-2ary 1898\n :sat-propagations-nary 833\n :sat-units             84\n :time                  0.00)"
+    },
+    {
+      "steps": 2,
+      "status": "unsat",
+      "checkMs": 3.3587999641895294,
+      "totalMs": 353.10890001710504,
+      "statistics": "(:max-memory              22.80\n :memory                  22.04\n :num-allocs              6626575\n :rlimit-count            511110\n :sat-backjumps           35\n :sat-conflicts           37\n :sat-decisions           93\n :sat-minimized-lits      69\n :sat-mk-clause-2ary      24764\n :sat-mk-clause-nary      8782\n :sat-mk-var              3178\n :sat-propagations-2ary   15249\n :sat-propagations-nary   3950\n :sat-subs-resolution-dyn 9\n :sat-units               249\n :time                    0.00)"
+    },
+    {
+      "steps": 3,
+      "status": "unsat",
+      "checkMs": 6.441400037147105,
+      "totalMs": 520.9544000099413,
+      "statistics": "(:max-memory              25.21\n :memory                  24.51\n :num-allocs              14684296\n :rlimit-count            814237\n :sat-backjumps           92\n :sat-conflicts           95\n :sat-decisions           268\n :sat-minimized-lits      254\n :sat-mk-clause-2ary      44350\n :sat-mk-clause-nary      13857\n :sat-mk-var              5255\n :sat-propagations-2ary   52015\n :sat-propagations-nary   12166\n :sat-subs-resolution-dyn 184\n :sat-units               1205\n :time                    0.01)"
+    },
+    {
+      "steps": 4,
+      "status": "unsat",
+      "checkMs": 9.15190001251176,
+      "totalMs": 688.130300026387,
+      "statistics": "(:max-memory              27.90\n :memory                  27.35\n :num-allocs              27333640\n :rlimit-count            1146644\n :sat-backjumps           181\n :sat-conflicts           185\n :sat-decisions           479\n :sat-minimized-lits      1004\n :sat-mk-clause-2ary      63942\n :sat-mk-clause-nary      18951\n :sat-mk-var              7332\n :sat-propagations-2ary   110208\n :sat-propagations-nary   27228\n :sat-subs-resolution-dyn 435\n :sat-units               2235\n :time                    0.01)"
+    },
+    {
+      "steps": 5,
+      "status": "unsat",
+      "checkMs": 203.28379998682067,
+      "totalMs": 1047.5666000274941,
+      "statistics": "(:max-memory              34.37\n :memory                  32.06\n :num-allocs              132477426\n :rlimit-count            2335580\n :sat-backjumps           291\n :sat-conflicts           296\n :sat-decisions           916\n :sat-del-clause          8809\n :sat-elim-clauses        7668\n :sat-elim-literals       86629\n :sat-minimized-lits      2077\n :sat-mk-clause-2ary      83889\n :sat-mk-clause-nary      24038\n :sat-mk-var              9409\n :sat-probing-assigned    1536\n :sat-propagations-2ary   824481\n :sat-propagations-nary   189797\n :sat-scc-elim-binary     169\n :sat-scc-elim-vars       153\n :sat-subs-resolution     48893\n :sat-subs-resolution-dyn 788\n :sat-subsumed            767\n :sat-units               7462\n :time                    0.20)"
+    },
+    {
+      "steps": 6,
+      "status": "unsat",
+      "checkMs": 6.453800015151501,
+      "totalMs": 1221.1280000046827,
+      "statistics": "(:max-memory              34.37\n :memory                  33.36\n :num-allocs              158693769\n :rlimit-count            2627753\n :sat-backjumps           343\n :sat-conflicts           349\n :sat-decisions           1082\n :sat-del-clause          8809\n :sat-elim-clauses        7668\n :sat-elim-literals       86629\n :sat-minimized-lits      2154\n :sat-mk-clause-2ary      98844\n :sat-mk-clause-nary      28662\n :sat-mk-var              11486\n :sat-probing-assigned    1536\n :sat-propagations-2ary   839642\n :sat-propagations-nary   194426\n :sat-scc-elim-binary     169\n :sat-scc-elim-vars       153\n :sat-subs-resolution     48893\n :sat-subs-resolution-dyn 801\n :sat-subsumed            767\n :sat-units               7879\n :time                    0.01)"
+    },
+    {
+      "steps": 7,
+      "status": "unsat",
+      "checkMs": 115.49779999768361,
+      "totalMs": 1507.2334000142291,
+      "statistics": "(:max-memory              36.56\n :memory                  33.30\n :num-allocs              300815476\n :rlimit-count            3047323\n :sat-backjumps           476\n :sat-conflicts           483\n :sat-decisions           1667\n :sat-del-clause          22763\n :sat-elim-clauses        19190\n :sat-elim-literals       211354\n :sat-minimized-lits      2880\n :sat-mk-clause-2ary      118394\n :sat-mk-clause-nary      33708\n :sat-mk-var              13563\n :sat-probing-assigned    1536\n :sat-propagations-2ary   889891\n :sat-propagations-nary   207793\n :sat-scc-elim-binary     298\n :sat-scc-elim-vars       458\n :sat-subs-resolution     78340\n :sat-subs-resolution-dyn 1142\n :sat-subsumed            2603\n :sat-units               8269\n :time                    0.12)"
+    },
+    {
+      "steps": 8,
+      "status": "unsat",
+      "checkMs": 144.70030000666156,
+      "totalMs": 1828.1236000475474,
+      "statistics": "(:max-memory              38.58\n :memory                  35.30\n :num-allocs              503397517\n :rlimit-count            3503269\n :sat-backjumps           609\n :sat-conflicts           617\n :sat-decisions           2382\n :sat-del-clause          24996\n :sat-elim-clauses        20840\n :sat-elim-literals       236970\n :sat-minimized-lits      3254\n :sat-mk-clause-2ary      138291\n :sat-mk-clause-nary      38828\n :sat-mk-var              15640\n :sat-probing-assigned    1536\n :sat-propagations-2ary   964372\n :sat-propagations-nary   227464\n :sat-scc-elim-binary     468\n :sat-scc-elim-vars       473\n :sat-subs-resolution     98332\n :sat-subs-resolution-dyn 1774\n :sat-subsumed            2910\n :sat-units               9180\n :time                    0.14)"
+    },
+    {
+      "steps": 9,
+      "status": "unsat",
+      "checkMs": 182.92570003541186,
+      "totalMs": 2170.6363999983296,
+      "statistics": "(:max-memory              40.57\n :memory                  36.75\n :num-allocs              837061300\n :rlimit-count            4025567\n :sat-backjumps           812\n :sat-conflicts           821\n :sat-decisions           3135\n :sat-del-clause          26378\n :sat-elim-clauses        21545\n :sat-elim-literals       257011\n :sat-minimized-lits      4857\n :sat-mk-clause-2ary      158671\n :sat-mk-clause-nary      44036\n :sat-mk-var              17717\n :sat-probing-assigned    1536\n :sat-propagations-2ary   1087899\n :sat-propagations-nary   256732\n :sat-restarts            22\n :sat-scc-elim-binary     946\n :sat-scc-elim-vars       519\n :sat-subs-resolution     112942\n :sat-subs-resolution-dyn 3182\n :sat-subsumed            3128\n :sat-units               9849\n :time                    0.18)"
+    },
+    {
+      "steps": 10,
+      "status": "unsat",
+      "checkMs": 172.93779994361103,
+      "totalMs": 2509.54910001019,
+      "statistics": "(:max-memory              44.00\n :memory                  39.66\n :num-allocs              1279715559\n :rlimit-count            4522737\n :sat-backjumps           961\n :sat-conflicts           971\n :sat-decisions           3610\n :sat-del-clause          28768\n :sat-elim-clauses        22974\n :sat-elim-literals       283064\n :sat-minimized-lits      5485\n :sat-mk-clause-2ary      179088\n :sat-mk-clause-nary      49185\n :sat-mk-var              19794\n :sat-probing-assigned    1536\n :sat-propagations-2ary   1181971\n :sat-propagations-nary   278822\n :sat-restarts            23\n :sat-scc-elim-binary     1074\n :sat-scc-elim-vars       588\n :sat-subs-resolution     127880\n :sat-subs-resolution-dyn 3808\n :sat-subsumed            3438\n :sat-units               10174\n :time                    0.17)"
+    },
+    {
+      "steps": 11,
+      "status": "unsat",
+      "checkMs": 224.93070003110915,
+      "totalMs": 2935.3345000417903,
+      "statistics": "(:max-memory              46.46\n :memory                  41.74\n :num-allocs              1963234466\n :rlimit-count            5049591\n :sat-backjumps           1141\n :sat-conflicts           1152\n :sat-decisions           4558\n :sat-del-clause          32403\n :sat-elim-clauses        25169\n :sat-elim-literals       309395\n :sat-minimized-lits      6608\n :sat-mk-clause-2ary      199962\n :sat-mk-clause-nary      54347\n :sat-mk-var              21871\n :sat-probing-assigned    1536\n :sat-propagations-2ary   1287745\n :sat-propagations-nary   306021\n :sat-restarts            31\n :sat-scc-elim-binary     1681\n :sat-scc-elim-vars       662\n :sat-subs-resolution     141976\n :sat-subs-resolution-dyn 4772\n :sat-subsumed            3669\n :sat-units               11125\n :time                    0.22)"
+    },
+    {
+      "steps": 12,
+      "status": "unsat",
+      "checkMs": 253.723900008481,
+      "totalMs": 3354.3945000274107,
+      "statistics": "(:max-memory              58.33\n :memory                  51.57\n :num-allocs              2823751604\n :rlimit-count            5889123\n :sat-backjumps           1720\n :sat-conflicts           1732\n :sat-decisions           8023\n :sat-del-clause          33790\n :sat-elim-clauses        25959\n :sat-elim-literals       332242\n :sat-minimized-lits      14311\n :sat-mk-clause-2ary      220267\n :sat-mk-clause-nary      59872\n :sat-mk-var              23948\n :sat-probing-assigned    1536\n :sat-propagations-2ary   1649167\n :sat-propagations-nary   392960\n :sat-restarts            122\n :sat-scc-elim-binary     2066\n :sat-scc-elim-vars       741\n :sat-subs-resolution     160677\n :sat-subs-resolution-dyn 11187\n :sat-subsumed            4026\n :sat-units               11995\n :time                    0.25)"
+    },
+    {
+      "steps": 13,
+      "status": "unsat",
+      "checkMs": 354.3618000112474,
+      "totalMs": 3885.411399998702,
+      "statistics": "(:max-memory              58.33\n :memory                  54.13\n :num-allocs              4006583826\n :rlimit-count            7975872\n :sat-backjumps           2074\n :sat-conflicts           2087\n :sat-decisions           9160\n :sat-del-clause          39484\n :sat-elim-clauses        30663\n :sat-elim-literals       377692\n :sat-minimized-lits      17209\n :sat-mk-clause-2ary      240361\n :sat-mk-clause-nary      65188\n :sat-mk-var              26025\n :sat-probing-assigned    2030\n :sat-propagations-2ary   3109195\n :sat-propagations-nary   629547\n :sat-restarts            122\n :sat-scc-elim-binary     2355\n :sat-scc-elim-vars       821\n :sat-subs-resolution     176313\n :sat-subs-resolution-dyn 12562\n :sat-subsumed            4757\n :sat-units               14880\n :time                    0.35)"
+    },
+    {
+      "steps": 14,
+      "status": "unsat",
+      "checkMs": 22.925700002815574,
+      "totalMs": 4070.091700006742,
+      "statistics": "(:max-memory              58.33\n :memory                  57.20\n :num-allocs              4214147080\n :rlimit-count            8407243\n :sat-backjumps           2287\n :sat-conflicts           2301\n :sat-decisions           9972\n :sat-del-clause          39484\n :sat-elim-clauses        30663\n :sat-elim-literals       377692\n :sat-minimized-lits      18402\n :sat-mk-clause-2ary      259973\n :sat-mk-clause-nary      70390\n :sat-mk-var              28102\n :sat-probing-assigned    2030\n :sat-propagations-2ary   3232097\n :sat-propagations-nary   664521\n :sat-restarts            122\n :sat-scc-elim-binary     2355\n :sat-scc-elim-vars       821\n :sat-subs-resolution     176313\n :sat-subs-resolution-dyn 13453\n :sat-subsumed            4757\n :sat-units               15709\n :time                    0.02)"
+    },
+    {
+      "steps": 15,
+      "status": "unsat",
+      "checkMs": 285.31579999253154,
+      "totalMs": 4524.071400053799,
+      "statistics": "(:max-memory              63.95\n :memory                  58.01\n :num-allocs              5456924707.00\n :rlimit-count            9253035\n :sat-backjumps           2917\n :sat-conflicts           2932\n :sat-decisions           13017\n :sat-del-clause          46992\n :sat-elim-clauses        35495\n :sat-elim-literals       486708\n :sat-minimized-lits      23762\n :sat-mk-clause-2ary      281102\n :sat-mk-clause-nary      75944\n :sat-mk-var              30179\n :sat-probing-assigned    2030\n :sat-propagations-2ary   3554538\n :sat-propagations-nary   744087\n :sat-restarts            213\n :sat-scc-elim-binary     2521\n :sat-scc-elim-vars       1123\n :sat-subs-resolution     212826\n :sat-subs-resolution-dyn 16811\n :sat-subsumed            6871\n :sat-units               16081\n :time                    0.28)"
+    },
+    {
+      "steps": 16,
+      "status": "unsat",
+      "checkMs": 299.0318000083789,
+      "totalMs": 4986.563800019212,
+      "statistics": "(:max-memory              68.30\n :memory                  61.56\n :num-allocs              7033209116.00\n :rlimit-count            10108462\n :sat-backjumps           3576\n :sat-conflicts           3592\n :sat-decisions           14882\n :sat-del-clause          47699\n :sat-elim-clauses        36012\n :sat-elim-literals       508131\n :sat-minimized-lits      31573\n :sat-mk-clause-2ary      301157\n :sat-mk-clause-nary      81575\n :sat-mk-var              32256\n :sat-probing-assigned    2030\n :sat-propagations-2ary   3887568\n :sat-propagations-nary   823304\n :sat-restarts            275\n :sat-scc-elim-binary     2663\n :sat-scc-elim-vars       1138\n :sat-subs-resolution     230565\n :sat-subs-resolution-dyn 20343\n :sat-subsumed            7026\n :sat-units               16905\n :time                    0.30)"
+    },
+    {
+      "steps": 17,
+      "status": "unknown",
+      "checkMs": 508.91330000013113,
+      "totalMs": 5654.299600049853,
+      "statistics": "(:max-memory              70.49\n :memory                  64.61\n :num-allocs              9209823033.00\n :rlimit-count            12803639\n :sat-backjumps           4789\n :sat-conflicts           4805\n :sat-decisions           20129\n :sat-del-clause          50746\n :sat-elim-clauses        38349\n :sat-elim-literals       538298\n :sat-minimized-lits      43727\n :sat-mk-clause-2ary      321340\n :sat-mk-clause-nary      87755\n :sat-mk-var              34333\n :sat-probing-assigned    2395\n :sat-propagations-2ary   5836425\n :sat-propagations-nary   1174692\n :sat-restarts            515\n :sat-scc-elim-binary     2806\n :sat-scc-elim-vars       1172\n :sat-subs-resolution     246521\n :sat-subs-resolution-dyn 26620\n :sat-subsumed            7552\n :sat-units               18403\n :time                    0.51)"
+    }
+  ]
+}

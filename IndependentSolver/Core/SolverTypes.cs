@@ -20,6 +20,7 @@ namespace CatDom.CoreSolver
     {
         internal RouteAggregation aggregation;
         internal Action<EngineResult> progress;
+        internal long expandedLimit = long.MaxValue;
     }
 
     [Serializable]
@@ -154,6 +155,7 @@ namespace CatDom.CoreSolver
     [Serializable]
     internal sealed class EngineResult
     {
+        internal bool baselineBudgetExceeded;
         public SolveStatus status;
         public string message;
 
@@ -162,6 +164,8 @@ namespace CatDom.CoreSolver
         public BoardSnapshot finalState;
         public List<string> ignoredMechanics = new List<string>();
         public long expanded;
+        internal string searchStage;
+        internal long abstractExpanded;
     }
 }
 

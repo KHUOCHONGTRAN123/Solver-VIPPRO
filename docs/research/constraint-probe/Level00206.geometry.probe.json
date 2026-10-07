@@ -1,0 +1,39 @@
+{
+  "method": "One initial phase, unit-step symbolic encoding; no independent replay; not acceptance",
+  "z3Version": "5.1.0",
+  "geometry": "Level00206.geometry.json",
+  "rows": [
+    {
+      "steps": 1,
+      "status": "sat",
+      "checkMs": 48.04000002332032,
+      "totalMs": 166.15689999889582,
+      "statistics": "(:added-eqs           4730\n :arith-eq-adapter    8\n :arith-diseq         230\n :arith-lower         72\n :arith-make-feasible 52\n :arith-max-columns   46\n :arith-upper         307\n :array-ax1           8\n :array-ax2           12\n :array-def-const     1\n :array-def-store     16\n :array-exp-ax2       37\n :array-sel-const     2\n :binary-propagations 2736\n :bv-bit2core         51586\n :bv-diseqs           2304\n :bv-dynamic-diseqs   110\n :bv->core-eq         622\n :conflicts           96\n :decisions           11839\n :del-clause          137\n :final-checks        9\n :max-memory          20.94\n :memory              20.94\n :mk-bool-var         8932\n :mk-clause           2248\n :mk-clause-binary    4377\n :num-allocs          1654170\n :num-checks          1\n :propagations        5282\n :rlimit-count        259078\n :time                0.05)",
+      "anchors": [
+        [
+          5,
+          48,
+          69,
+          45,
+          30,
+          21,
+          13,
+          58
+        ],
+        [
+          5,
+          48,
+          69,
+          53,
+          30,
+          21,
+          13,
+          58
+        ]
+      ],
+      "movers": [
+        3
+      ]
+    }
+  ]
+}

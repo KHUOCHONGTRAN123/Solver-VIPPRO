@@ -1,0 +1,2847 @@
+{
+  "measurement": {
+    "level": "Level00269",
+    "baselineExpanded": 82130,
+    "baselineMs": 2842.8447,
+    "status": "Solved",
+    "expanded": 2096,
+    "abstractExpanded": 11604,
+    "solveTimeMs": 154.5909,
+    "replayed": true,
+    "passed": true,
+    "expandedExclusiveLimit": 30000,
+    "solveTimeExclusiveLimitMs": 3000,
+    "measurementKind": "single-run screening; acceptance requires three measured runs after target warm-up",
+    "drags": 66,
+    "steps": 262,
+    "levelHash": "A429712F6D7F8BFAEE506D3CA37F2BEBEAEF2825EB5762E21C0324594CC46BF7",
+    "assemblyHash": "00A99180168FE3B674102A911FFE56B276D9E9F7D0CB09920D04EAA83C993A2E"
+  },
+  "trace": [
+    {
+      "expanded": 0,
+      "abstractExpanded": 0,
+      "drags": 0,
+      "stage": null,
+      "elapsedMs": 0.6109
+    },
+    {
+      "expanded": 0,
+      "abstractExpanded": 0,
+      "drags": 0,
+      "stage": "direct",
+      "elapsedMs": 0.6303
+    },
+    {
+      "expanded": 1,
+      "abstractExpanded": 0,
+      "drags": 1,
+      "stage": "direct",
+      "elapsedMs": 0.9606
+    },
+    {
+      "expanded": 1,
+      "abstractExpanded": 0,
+      "drags": 1,
+      "stage": "direct",
+      "elapsedMs": 0.9647
+    },
+    {
+      "expanded": 2,
+      "abstractExpanded": 0,
+      "drags": 1,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 0.9749
+    },
+    {
+      "expanded": 47,
+      "abstractExpanded": 0,
+      "drags": 1,
+      "stage": "compact",
+      "elapsedMs": 2.6676
+    },
+    {
+      "expanded": 56,
+      "abstractExpanded": 0,
+      "drags": 10,
+      "stage": "compact",
+      "elapsedMs": 2.7484
+    },
+    {
+      "expanded": 56,
+      "abstractExpanded": 0,
+      "drags": 10,
+      "stage": "direct",
+      "elapsedMs": 2.751
+    },
+    {
+      "expanded": 57,
+      "abstractExpanded": 0,
+      "drags": 11,
+      "stage": "direct",
+      "elapsedMs": 4.402
+    },
+    {
+      "expanded": 57,
+      "abstractExpanded": 0,
+      "drags": 11,
+      "stage": "direct",
+      "elapsedMs": 4.4093
+    },
+    {
+      "expanded": 58,
+      "abstractExpanded": 0,
+      "drags": 12,
+      "stage": "direct",
+      "elapsedMs": 4.7181
+    },
+    {
+      "expanded": 58,
+      "abstractExpanded": 0,
+      "drags": 12,
+      "stage": "direct",
+      "elapsedMs": 4.7218
+    },
+    {
+      "expanded": 59,
+      "abstractExpanded": 0,
+      "drags": 12,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 4.731
+    },
+    {
+      "expanded": 72,
+      "abstractExpanded": 0,
+      "drags": 12,
+      "stage": "compact",
+      "elapsedMs": 5.8663
+    },
+    {
+      "expanded": 76,
+      "abstractExpanded": 0,
+      "drags": 16,
+      "stage": "compact",
+      "elapsedMs": 5.9163
+    },
+    {
+      "expanded": 76,
+      "abstractExpanded": 0,
+      "drags": 16,
+      "stage": "direct",
+      "elapsedMs": 5.9185
+    },
+    {
+      "expanded": 77,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "direct",
+      "elapsedMs": 6.0892
+    },
+    {
+      "expanded": 77,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "direct",
+      "elapsedMs": 6.0913
+    },
+    {
+      "expanded": 78,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 6.099
+    },
+    {
+      "expanded": 206,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 10.3224
+    },
+    {
+      "expanded": 462,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 22.3471
+    },
+    {
+      "expanded": 718,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 28.2142
+    },
+    {
+      "expanded": 718,
+      "abstractExpanded": 0,
+      "drags": 17,
+      "stage": "pair-pattern-build",
+      "elapsedMs": 28.2593
+    },
+    {
+      "expanded": 718,
+      "abstractExpanded": 3298,
+      "drags": 17,
+      "stage": "pair-pattern-search",
+      "elapsedMs": 28.8359
+    },
+    {
+      "expanded": 851,
+      "abstractExpanded": 3298,
+      "drags": 17,
+      "stage": "compact",
+      "elapsedMs": 32.7597
+    },
+    {
+      "expanded": 855,
+      "abstractExpanded": 3298,
+      "drags": 21,
+      "stage": "compact",
+      "elapsedMs": 32.819
+    },
+    {
+      "expanded": 855,
+      "abstractExpanded": 3298,
+      "drags": 21,
+      "stage": "direct",
+      "elapsedMs": 32.829
+    },
+    {
+      "expanded": 856,
+      "abstractExpanded": 3298,
+      "drags": 21,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 32.8404
+    },
+    {
+      "expanded": 861,
+      "abstractExpanded": 3298,
+      "drags": 21,
+      "stage": "compact",
+      "elapsedMs": 37.963
+    },
+    {
+      "expanded": 863,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "compact",
+      "elapsedMs": 38.0033
+    },
+    {
+      "expanded": 863,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "direct",
+      "elapsedMs": 38.0055
+    },
+    {
+      "expanded": 864,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 38.0132
+    },
+    {
+      "expanded": 992,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 45.474
+    },
+    {
+      "expanded": 1248,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 65.3316
+    },
+    {
+      "expanded": 1504,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 74.9417
+    },
+    {
+      "expanded": 1504,
+      "abstractExpanded": 3298,
+      "drags": 23,
+      "stage": "pair-pattern-build",
+      "elapsedMs": 75.025
+    },
+    {
+      "expanded": 1504,
+      "abstractExpanded": 8697,
+      "drags": 23,
+      "stage": "pair-pattern-search",
+      "elapsedMs": 77.0753
+    },
+    {
+      "expanded": 1597,
+      "abstractExpanded": 8697,
+      "drags": 23,
+      "stage": "compact",
+      "elapsedMs": 82.8852
+    },
+    {
+      "expanded": 1603,
+      "abstractExpanded": 8697,
+      "drags": 29,
+      "stage": "compact",
+      "elapsedMs": 82.9446
+    },
+    {
+      "expanded": 1603,
+      "abstractExpanded": 8697,
+      "drags": 29,
+      "stage": "direct",
+      "elapsedMs": 82.9473
+    },
+    {
+      "expanded": 1604,
+      "abstractExpanded": 8697,
+      "drags": 29,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 82.9556
+    },
+    {
+      "expanded": 1625,
+      "abstractExpanded": 8697,
+      "drags": 29,
+      "stage": "compact",
+      "elapsedMs": 87.4802
+    },
+    {
+      "expanded": 1631,
+      "abstractExpanded": 8697,
+      "drags": 35,
+      "stage": "compact",
+      "elapsedMs": 87.5439
+    },
+    {
+      "expanded": 1631,
+      "abstractExpanded": 8697,
+      "drags": 35,
+      "stage": "direct",
+      "elapsedMs": 87.546
+    },
+    {
+      "expanded": 1632,
+      "abstractExpanded": 8697,
+      "drags": 35,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 87.5605
+    },
+    {
+      "expanded": 1641,
+      "abstractExpanded": 8697,
+      "drags": 35,
+      "stage": "compact",
+      "elapsedMs": 90.2027
+    },
+    {
+      "expanded": 1644,
+      "abstractExpanded": 8697,
+      "drags": 38,
+      "stage": "compact",
+      "elapsedMs": 90.2471
+    },
+    {
+      "expanded": 1644,
+      "abstractExpanded": 8697,
+      "drags": 38,
+      "stage": "direct",
+      "elapsedMs": 90.2515
+    },
+    {
+      "expanded": 1645,
+      "abstractExpanded": 8697,
+      "drags": 39,
+      "stage": "direct",
+      "elapsedMs": 90.3814
+    },
+    {
+      "expanded": 1645,
+      "abstractExpanded": 8697,
+      "drags": 39,
+      "stage": "direct",
+      "elapsedMs": 90.3835
+    },
+    {
+      "expanded": 1646,
+      "abstractExpanded": 8697,
+      "drags": 39,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 90.3939
+    },
+    {
+      "expanded": 1651,
+      "abstractExpanded": 8697,
+      "drags": 39,
+      "stage": "compact",
+      "elapsedMs": 98.7127
+    },
+    {
+      "expanded": 1653,
+      "abstractExpanded": 8697,
+      "drags": 41,
+      "stage": "compact",
+      "elapsedMs": 98.7511
+    },
+    {
+      "expanded": 1653,
+      "abstractExpanded": 8697,
+      "drags": 41,
+      "stage": "direct",
+      "elapsedMs": 98.7542
+    },
+    {
+      "expanded": 1654,
+      "abstractExpanded": 8697,
+      "drags": 41,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 98.7714
+    },
+    {
+      "expanded": 1659,
+      "abstractExpanded": 8697,
+      "drags": 41,
+      "stage": "compact",
+      "elapsedMs": 99.9573
+    },
+    {
+      "expanded": 1661,
+      "abstractExpanded": 8697,
+      "drags": 43,
+      "stage": "compact",
+      "elapsedMs": 99.9934
+    },
+    {
+      "expanded": 1661,
+      "abstractExpanded": 8697,
+      "drags": 43,
+      "stage": "direct",
+      "elapsedMs": 99.9955
+    },
+    {
+      "expanded": 1662,
+      "abstractExpanded": 8697,
+      "drags": 43,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 100.01
+    },
+    {
+      "expanded": 1790,
+      "abstractExpanded": 8697,
+      "drags": 43,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 120.7715
+    },
+    {
+      "expanded": 1870,
+      "abstractExpanded": 8697,
+      "drags": 43,
+      "stage": "compact",
+      "elapsedMs": 129.0778
+    },
+    {
+      "expanded": 1876,
+      "abstractExpanded": 8697,
+      "drags": 49,
+      "stage": "compact",
+      "elapsedMs": 129.144
+    },
+    {
+      "expanded": 1876,
+      "abstractExpanded": 8697,
+      "drags": 49,
+      "stage": "direct",
+      "elapsedMs": 129.1495
+    },
+    {
+      "expanded": 1877,
+      "abstractExpanded": 8697,
+      "drags": 49,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 129.1584
+    },
+    {
+      "expanded": 1882,
+      "abstractExpanded": 8697,
+      "drags": 49,
+      "stage": "compact",
+      "elapsedMs": 129.9806
+    },
+    {
+      "expanded": 1884,
+      "abstractExpanded": 8697,
+      "drags": 51,
+      "stage": "compact",
+      "elapsedMs": 130.1037
+    },
+    {
+      "expanded": 1884,
+      "abstractExpanded": 8697,
+      "drags": 51,
+      "stage": "direct",
+      "elapsedMs": 130.106
+    },
+    {
+      "expanded": 1885,
+      "abstractExpanded": 8697,
+      "drags": 51,
+      "stage": "beam-cheap-sum-4",
+      "elapsedMs": 130.1108
+    },
+    {
+      "expanded": 2013,
+      "abstractExpanded": 8697,
+      "drags": 51,
+      "stage": "beam-cheap-sum-16",
+      "elapsedMs": 145.0811
+    },
+    {
+      "expanded": 2076,
+      "abstractExpanded": 8697,
+      "drags": 51,
+      "stage": "compact",
+      "elapsedMs": 149.0186
+    },
+    {
+      "expanded": 2081,
+      "abstractExpanded": 8697,
+      "drags": 56,
+      "stage": "compact",
+      "elapsedMs": 149.0595
+    },
+    {
+      "expanded": 2081,
+      "abstractExpanded": 8697,
+      "drags": 56,
+      "stage": "direct",
+      "elapsedMs": 149.0621
+    },
+    {
+      "expanded": 2082,
+      "abstractExpanded": 8697,
+      "drags": 57,
+      "stage": "direct",
+      "elapsedMs": 149.2268
+    },
+    {
+      "expanded": 2082,
+      "abstractExpanded": 8697,
+      "drags": 57,
+      "stage": "direct",
+      "elapsedMs": 149.2282
+    },
+    {
+      "expanded": 2083,
+      "abstractExpanded": 8697,
+      "drags": 58,
+      "stage": "direct",
+      "elapsedMs": 149.3787
+    },
+    {
+      "expanded": 2083,
+      "abstractExpanded": 8697,
+      "drags": 58,
+      "stage": "direct",
+      "elapsedMs": 149.3803
+    },
+    {
+      "expanded": 2084,
+      "abstractExpanded": 8697,
+      "drags": 59,
+      "stage": "direct",
+      "elapsedMs": 149.5057
+    },
+    {
+      "expanded": 2084,
+      "abstractExpanded": 8697,
+      "drags": 59,
+      "stage": "direct",
+      "elapsedMs": 149.5069
+    },
+    {
+      "expanded": 2085,
+      "abstractExpanded": 8697,
+      "drags": 60,
+      "stage": "direct",
+      "elapsedMs": 149.5725
+    },
+    {
+      "expanded": 2085,
+      "abstractExpanded": 8697,
+      "drags": 60,
+      "stage": "direct",
+      "elapsedMs": 149.5736
+    },
+    {
+      "expanded": 2086,
+      "abstractExpanded": 8697,
+      "drags": 60,
+      "stage": "pair-pattern-build",
+      "elapsedMs": 149.5894
+    },
+    {
+      "expanded": 2086,
+      "abstractExpanded": 11604,
+      "drags": 60,
+      "stage": "pair-pattern-search",
+      "elapsedMs": 149.8686
+    },
+    {
+      "expanded": 2090,
+      "abstractExpanded": 11604,
+      "drags": 60,
+      "stage": "compact",
+      "elapsedMs": 150.1536
+    },
+    {
+      "expanded": 2093,
+      "abstractExpanded": 11604,
+      "drags": 63,
+      "stage": "compact",
+      "elapsedMs": 150.1706
+    },
+    {
+      "expanded": 2093,
+      "abstractExpanded": 11604,
+      "drags": 63,
+      "stage": "direct",
+      "elapsedMs": 150.172
+    },
+    {
+      "expanded": 2094,
+      "abstractExpanded": 11604,
+      "drags": 64,
+      "stage": "direct",
+      "elapsedMs": 150.2099
+    },
+    {
+      "expanded": 2094,
+      "abstractExpanded": 11604,
+      "drags": 64,
+      "stage": "direct",
+      "elapsedMs": 150.2111
+    },
+    {
+      "expanded": 2095,
+      "abstractExpanded": 11604,
+      "drags": 65,
+      "stage": "direct",
+      "elapsedMs": 150.2387
+    },
+    {
+      "expanded": 2095,
+      "abstractExpanded": 11604,
+      "drags": 65,
+      "stage": "direct",
+      "elapsedMs": 150.2404
+    }
+  ],
+  "solution": {
+    "algorithmVersion": "1.0.0",
+    "status": "Solved",
+    "message": "All playable holes finished and cats cleared.",
+    "expanded": 2096,
+    "solveTimeMs": 154.5909,
+    "moves": [
+      {
+        "holeId": 4,
+        "start": {
+          "x": 1,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 4,
+            "color": 5,
+            "catId": 9,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 1,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 2,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 3,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 2,
+            "y": 7
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 1,
+          "y": 1
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 3,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 2,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 7
+          },
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 5,
+            "y": 7
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 9,
+        "start": {
+          "x": 2,
+          "y": 1
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 5,
+        "start": {
+          "x": 3,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 1
+          },
+          {
+            "x": 3,
+            "y": 0
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 5,
+            "color": 4,
+            "catId": 4,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 3,
+        "start": {
+          "x": 4,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 3,
+            "color": 8,
+            "catId": 7,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 6,
+        "start": {
+          "x": 6,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 6,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 3
+          },
+          {
+            "x": 5,
+            "y": 4
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 6,
+            "color": 3,
+            "catId": 8,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 1,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 3
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 3,
+        "start": {
+          "x": 2,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 9,
+        "start": {
+          "x": 1,
+          "y": 1
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 2,
+          "y": 3
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 2,
+            "color": 7,
+            "catId": 5,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 3,
+        "start": {
+          "x": 0,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 3,
+            "color": 8,
+            "catId": -1,
+            "boxId": 0,
+            "boxIndex": 0
+          }
+        ]
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 5,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 7
+          },
+          {
+            "x": 3,
+            "y": 7
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 3,
+          "y": 3
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 1,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 4,
+            "color": 5,
+            "catId": 6,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 2,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 10,
+        "start": {
+          "x": 0,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 3
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 10,
+            "color": 3,
+            "catId": -1,
+            "boxId": 0,
+            "boxIndex": 1
+          }
+        ]
+      },
+      {
+        "holeId": 10,
+        "start": {
+          "x": 1,
+          "y": 3
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 2,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 3,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 2,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 10,
+        "start": {
+          "x": 0,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 0
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 9,
+        "start": {
+          "x": 3,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 7
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 9,
+            "color": 1,
+            "catId": 0,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 9,
+        "start": {
+          "x": 1,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 7
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 3,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 0,
+            "y": 7
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 3,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 4,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 4
+          },
+          {
+            "x": 2,
+            "y": 3
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 0,
+            "y": 2
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 4,
+        "start": {
+          "x": 0,
+          "y": 7
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 7
+          },
+          {
+            "x": 1,
+            "y": 7
+          },
+          {
+            "x": 2,
+            "y": 7
+          },
+          {
+            "x": 3,
+            "y": 7
+          },
+          {
+            "x": 4,
+            "y": 7
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 4,
+            "color": 5,
+            "catId": 3,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 4,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 9,
+        "start": {
+          "x": 3,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 9,
+            "color": 1,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 0
+          }
+        ]
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 5,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 11,
+            "color": 8,
+            "catId": 1,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 2,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 0,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 0,
+            "color": 4,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 1
+          }
+        ]
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 4
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 4,
+          "y": 1
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 8,
+            "color": 6,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 2
+          },
+          {
+            "holeId": 8,
+            "color": 6,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 3
+          }
+        ]
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 4,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 3,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 5,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 3,
+          "y": 4
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 5,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 0
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 5,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 0,
+            "color": 4,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 0
+          }
+        ]
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 1
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 7,
+        "start": {
+          "x": 0,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 3,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 7,
+            "color": 2,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 1
+          }
+        ]
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 4,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 5,
+            "y": 0
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 2,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 0,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 0,
+          "y": 5
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 5
+          },
+          {
+            "x": 0,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 8,
+        "start": {
+          "x": 3,
+          "y": 3
+        },
+        "path": [
+          {
+            "x": 3,
+            "y": 3
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 0,
+            "y": 3
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 8,
+            "color": 6,
+            "catId": -1,
+            "boxId": 0,
+            "boxIndex": 2
+          },
+          {
+            "holeId": 8,
+            "color": 6,
+            "catId": -1,
+            "boxId": 0,
+            "boxIndex": 3
+          }
+        ]
+      },
+      {
+        "holeId": 10,
+        "start": {
+          "x": 2,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 2,
+            "y": 0
+          },
+          {
+            "x": 2,
+            "y": 1
+          },
+          {
+            "x": 2,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 10,
+            "color": 3,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 4
+          }
+        ]
+      },
+      {
+        "holeId": 10,
+        "start": {
+          "x": 4,
+          "y": 4
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 5,
+            "y": 5
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 10,
+            "color": 3,
+            "catId": 2,
+            "boxId": -1,
+            "boxIndex": -1
+          }
+        ]
+      },
+      {
+        "holeId": 1,
+        "start": {
+          "x": 0,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 0,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 1
+          },
+          {
+            "x": 1,
+            "y": 2
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 1,
+            "color": 2,
+            "catId": -1,
+            "boxId": 0,
+            "boxIndex": 4
+          }
+        ]
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 5,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 6
+          },
+          {
+            "x": 5,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 11,
+            "color": 8,
+            "catId": -1,
+            "boxId": 1,
+            "boxIndex": 5
+          }
+        ]
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 4,
+          "y": 4
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 6
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 5,
+          "y": 0
+        },
+        "path": [
+          {
+            "x": 5,
+            "y": 0
+          },
+          {
+            "x": 5,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 1
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 1,
+            "y": 4
+          }
+        ],
+        "eaten": []
+      },
+      {
+        "holeId": 2,
+        "start": {
+          "x": 0,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 0,
+            "y": 6
+          },
+          {
+            "x": 1,
+            "y": 6
+          },
+          {
+            "x": 2,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 6
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 2,
+            "color": 7,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 2
+          }
+        ]
+      },
+      {
+        "holeId": 11,
+        "start": {
+          "x": 4,
+          "y": 6
+        },
+        "path": [
+          {
+            "x": 4,
+            "y": 6
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 11,
+            "color": 8,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 3
+          }
+        ]
+      },
+      {
+        "holeId": 0,
+        "start": {
+          "x": 1,
+          "y": 4
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 4,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 0,
+            "color": 4,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 4
+          }
+        ]
+      },
+      {
+        "holeId": 1,
+        "start": {
+          "x": 1,
+          "y": 2
+        },
+        "path": [
+          {
+            "x": 1,
+            "y": 2
+          },
+          {
+            "x": 1,
+            "y": 3
+          },
+          {
+            "x": 1,
+            "y": 4
+          },
+          {
+            "x": 1,
+            "y": 5
+          },
+          {
+            "x": 2,
+            "y": 5
+          },
+          {
+            "x": 3,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 5
+          },
+          {
+            "x": 4,
+            "y": 4
+          },
+          {
+            "x": 4,
+            "y": 3
+          },
+          {
+            "x": 4,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 2
+          },
+          {
+            "x": 5,
+            "y": 1
+          }
+        ],
+        "eaten": [
+          {
+            "holeId": 1,
+            "color": 2,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 5
+          },
+          {
+            "holeId": 1,
+            "color": 2,
+            "catId": -1,
+            "boxId": 2,
+            "boxIndex": 6
+          }
+        ]
+      }
+    ]
+  }
+}

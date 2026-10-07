@@ -25,3 +25,12 @@ Kế hoạch yêu cầu không có hồi quy lặp lại đáng kể ở level n
 Số liệu thô cuối và các lượt đo lại được lưu trong `docs/benchmarks/raw-measurements.zip`; báo cáo CSV, summary và integration được giữ cạnh đó. Project consumer NuGet cần restore từ `artifacts/nuget` sau khi đóng gói. Unity được kiểm tra bằng Editor Mono 2022.3; chưa kiểm tra build player IL2CPP.
 
 Chỉ xóa dữ liệu thử nghiệm cũ khi đủ299 level pass, cùng binary sản phẩm, tổng914.398 mở rộng, từng level dưới100.000 và2GiB, cùng trạng thái cuối, test integration và báo cáo hiệu năng đạt.
+# Kiểm chứng Solver 2.0
+
+`hybrid-check` kiểm tra đủ 299 level, so plan/counter của 278 level dưới 10.000 với kết quả v42 frozen; mọi plan Solved được replay độc lập. Timeout 10 giây là giới hạn harness; hai level 206/233 vẫn chưa giải trong giới hạn và được báo riêng. Không dùng timeout làm điều kiện chuyển thuật toán trong sản phẩm.
+
+`tests` bổ sung exact-budget solved boundary, restart từ đầu, tổng chi phí và cancellation; tiếp tục chạy 504 so sánh exhaustive trên bàn nhỏ, checkpoint, gate/link, masks, malformed input và concurrent calls. `route-graph-tests` đối chiếu 57.936 khoảng cách với edge oracle trên 21 level nghiên cứu.
+
+Các số liệu cải tiến riêng 19 level không bao gồm baseline 10.000 chạy trước trong hybrid. File `docs/benchmarks/v2/hybrid-screen.json` ghi chi phí hai lượt và moves của bản kết hợp. Lệnh `Tools/PackageV2.ps1` kiểm tra đầy đủ phạm vi, accounting, replay và hash binary trước đóng gói. Bản nghiên cứu dùng API nội bộ khi so ngưỡng 5.000; public API vẫn cố định 10.000.
+
+## Hồ sơ kiểm chứng 1.0.0 (lịch sử)

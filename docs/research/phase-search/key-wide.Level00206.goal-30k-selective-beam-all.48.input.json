@@ -1,0 +1,74 @@
+{
+  "measurementKind": "Single diagnostic phase; capped search; not a full-level solve or acceptance",
+  "fixture": "Level00206.goal-30k-selective-beam-all.48.input.json",
+  "fixtureHash": "716B6A94E4FC06BA547E7B8B3D68EC7991B5319568412B4C697514DD5AAF1142",
+  "assemblyHash": "8C2191157E4F7877B6F7260D7F75DE0109A632010E4182D365E8B95A7B1E8486",
+  "method": "key-wide",
+  "limit": 10000,
+  "cancelled": false,
+  "found": false,
+  "replayed": false,
+  "expanded": 2048,
+  "abstractExpanded": 0,
+  "phaseMs": 2053.1917,
+  "drags": 0,
+  "steps": 0,
+  "trace": [
+    {
+      "expanded": 0,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 123.1588
+    },
+    {
+      "expanded": 256,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 630.845
+    },
+    {
+      "expanded": 512,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 866.791
+    },
+    {
+      "expanded": 768,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 1070.7929
+    },
+    {
+      "expanded": 1024,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 1279.3904
+    },
+    {
+      "expanded": 1280,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 1478.2742
+    },
+    {
+      "expanded": 1536,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 1673.9033
+    },
+    {
+      "expanded": 1792,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 1872.4626
+    },
+    {
+      "expanded": 2048,
+      "abstractExpanded": 0,
+      "searchStage": "beam-min-128",
+      "ms": 2052.1987
+    }
+  ],
+  "auditRows": [],
+  "moves": []
+}

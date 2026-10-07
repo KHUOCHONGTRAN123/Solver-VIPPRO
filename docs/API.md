@@ -1,6 +1,6 @@
-# Solver 1.0
+# Solver 2.0
 
-Thuật toán 1.0.0 giữ logic và thứ tự tìm kiếm của v42. Thư viện không phụ thuộc Unity, nhắm .NET Standard 2.1. CLI nhắm .NET 10; bản Windows x64 tự chứa runtime.
+Solver 2.0.0 chạy thuật toán 1.0.0 với ngân sách 10.000 trạng thái full-state. Nếu cần mở rộng thêm trạng thái trước khi giải xong, solver bỏ lời giải chưa hoàn tất và chạy thuật toán cải tiến từ đầu level. Không dùng thời gian để chuyển thuật toán. Thư viện không phụ thuộc Unity, nhắm .NET Standard 2.1. CLI nhắm .NET 10; bản Windows x64 tự chứa runtime.
 
 ## Gọi thư viện
 
@@ -18,14 +18,17 @@ Có thể truyền `CancellationToken` để hủy. Mỗi lần gọi sở hữu
 
 ## Output
 
-Output có đúng sáu trường:
+Output có chín trường:
 
 | Trường | Ý nghĩa |
 |---|---|
-| `algorithmVersion` | `1.0.0` |
+| `algorithmVersion` | `2.0.0` |
+| `searchAlgorithm` | `baseline` hoặc `baseline+improved` |
+| `baselineExpanded` | Chi phí lượt thuật toán cũ, tối đa 10.000 |
+| `improvedExpanded` | Chi phí lượt thuật toán cải tiến; bằng 0 nếu không chuyển |
 | `status` | `Solved`, `NoNextCatReachable`, `InvalidInput`, `UnsupportedMechanics`, `Cancelled` |
 | `message` | Thông tin kết quả hoặc lỗi |
-| `expanded` | Số lần mở rộng logic, cùng cách đếm v42 |
+| `expanded` | Tổng `baselineExpanded + improvedExpanded`, gồm cả lượt thử thất bại |
 | `solveTimeMs` | Thời gian giải thực tế, số thực đơn vị mili giây |
 | `moves` | Chuỗi nước đi theo thứ tự; mỗi move gồm `holeId`, `start`, `path`, `eaten` |
 
@@ -33,7 +36,10 @@ Ví dụ cấu trúc output (số liệu chỉ minh họa):
 
 ```json
 {
-  "algorithmVersion": "1.0.0",
+  "algorithmVersion": "2.0.0",
+  "searchAlgorithm": "baseline",
+  "baselineExpanded": 8,
+  "improvedExpanded": 0,
   "status": "Solved",
   "message": "All playable holes finished and cats cleared.",
   "expanded": 8,
@@ -50,7 +56,9 @@ Ví dụ cấu trúc output (số liệu chỉ minh họa):
 
 Trường thời gian được trả cả khi input lỗi, mechanics không hỗ trợ hoặc bị hủy. Lần gọi đầu có thể gồm khởi tạo catalog/JIT nên chậm hơn lần gọi đã warm-up. Thời gian phụ thuộc máy, runtime và level; số liệu benchmark không phải cam kết thời gian cố định.
 
-Solver không đặt deadline hoặc giới hạn 100.000 bên trong. Benchmark áp dụng ngân sách bên ngoài; vượt ngân sách không chứng minh vô nghiệm. `NoNextCatReachable` nói về trạng thái đã chốt, không khẳng định không tồn tại một thứ tự ăn khác.
+Solver không đặt deadline hoặc giới hạn tổng 100.000 bên trong. Ngân sách 10.000 chỉ giới hạn lượt baseline, không giới hạn lượt cải tiến. Nếu giải xong ngay ở trạng thái thứ 10.000, giữ lời giải baseline; chỉ chuyển khi cần trạng thái tiếp theo. `CancellationToken` vẫn hủy cả quá trình và giữ chi phí đã dùng. `NoNextCatReachable` nói về trạng thái đã chốt, không khẳng định không tồn tại một thứ tự ăn khác.
+
+Ngưỡng 30.000/<3 giây trong nghiên cứu 19 level áp dụng cho lượt cải tiến độc lập, không phải tổng hybrid. Hybrid cộng thêm tối đa 10.000 trạng thái và thời gian baseline. Level00206/00233 chưa được chứng minh đạt chi phí/thời gian; fallback không bảo đảm mọi level đều giải nhanh. Version 2.0 thêm trường JSON và thay thuật toán/plan của nhóm vượt ngân sách; consumer không nên yêu cầu output chỉ có sáu trường như 1.0.0.
 
 ## CLI
 

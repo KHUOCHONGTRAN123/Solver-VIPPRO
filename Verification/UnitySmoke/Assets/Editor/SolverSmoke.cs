@@ -21,6 +21,7 @@ public static class SolverSmoke
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Standalone, (ApiCompatibilityLevel)Enum.Parse(typeof(ApiCompatibilityLevel), standardName));
             var result = CatLevelSolver.SolveLevel(File.ReadAllText(level));
             if (result.status != SolverStatus.Solved || double.IsNaN(result.solveTimeMs) || double.IsInfinity(result.solveTimeMs)) throw new Exception("Unity solve failed");
+            if (result.algorithmVersion != "2.0.0" || result.expanded != result.baselineExpanded + result.improvedExpanded) throw new Exception("Unity v2 contract failed");
             File.WriteAllText(output, JsonConvert.SerializeObject(new { status = "Passed", unityVersion = UnityEngine.Application.unityVersion, framework, result.algorithmVersion, result.expanded, result.solveTimeMs }));
             EditorApplication.Exit(0);
         }

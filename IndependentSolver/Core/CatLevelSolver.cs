@@ -318,6 +318,7 @@ namespace CatDom.CoreSolver
             internal bool terminal;
             internal long score;
             internal long? consumptionUtility;
+            internal long? futureRank;
             internal bool? routeContinuation;
             internal string consumptionPhase;
         }
@@ -333,6 +334,8 @@ namespace CatDom.CoreSolver
         {
             private CellMask routeFixedMask;
             private readonly Dictionary<string, bool> relaxedProgressionCache = new Dictionary<string, bool>();
+            private readonly Dictionary<(bool[][] phase, Positions state, RouteAggregation aggregation, bool keys), long> cheapScoreCache
+                = new Dictionary<(bool[][], Positions, RouteAggregation, bool), long>();
             private readonly Dictionary<(bool[][] phase, int hole, int target, Positions state), long> routeClearanceScores = new Dictionary<(bool[][], int, int, Positions), long>();
             private BoardInput board;
             private static readonly RoutePolicy SharedPolicy = new RoutePolicy();
@@ -581,7 +584,17 @@ namespace CatDom.CoreSolver
                 return type == 0 || (type == 1 ? CellAt(from).x == CellAt(to).x : CellAt(from).y == CellAt(to).y);
             }
 
-            private void CheckBudget() => token.ThrowIfCancellationRequested();
+            private void CheckBudget()
+            {
+                token.ThrowIfCancellationRequested();
+                if (decisionPhaseLimit > 0 && (result.expanded - decisionPhaseStart >= decisionPhaseLimit || result.expanded >= decisionTotalEnd))
+                    throw new DecisionBudgetExceeded();
+            }
+            private void TraceStage(string stage)
+            {
+                result.searchStage = stage;
+                context.progress?.Invoke(result);
+            }
             internal void Run()
             {
                 result.initialEaten = Consume();
@@ -664,24 +677,42 @@ namespace CatDom.CoreSolver
             private bool prioritizeRouteKeys;
             private void SearchRouteClearing()
             {
-                
+                // Test direct consumption without ranking every parking endpoint.
+                searchDepthLimit = 1;
+                bestDepth = int.MaxValue;
+                visited = new Dictionary<Positions, int>();
+                TraceStage("direct");
+                Search(current, new Node());
+                if (best != null)
+                    return;
+                int previousCount = visited.Count;
                 int activeHoles = 0;
                 foreach (int p in current.values)
                     if (p >= 0)
                         activeHoles++;
                 if (activeHoles <= 4)
                 {
+                    if (SearchPairPatterns(256) || SearchPairPatterns(4096, includeTriples: true))
+                        return;
                     SearchSmallRouteFrontier();
                     return;
                 }
-
-                int previousCount = -1;
-                for (searchDepthLimit = 1;; searchDepthLimit++)
+                // Global route pressure cheaply reaches short or long chains.
+                // Pattern ranking follows when a narrow beam cannot clear them.
+                // Keep the policy selected for a large input arrangement through
+                // its phases: switching as bodies disappear changes event order.
+                if (PreferTargetCorridors() && SearchTargetBeams() ||
+                    SearchRouteBeam(true, 4, 128, cheapRank: true) ||
+                    SearchRouteBeam(true, 16, 512, cheapRank: true) ||
+                    SearchPairPatterns(256) || SearchPairPatterns(2048, includeTriples: true))
+                    return;
+                for (searchDepthLimit = 2;; searchDepthLimit++)
                 {
                     token.ThrowIfCancellationRequested();
                     best = null;
                     bestDepth = int.MaxValue;
                     visited = new Dictionary<Positions, int>();
+                    TraceStage("depth-" + searchDepthLimit);
                     Search(current, new Node());
                     stats.uniqueBoards += visited.Count;
                     context.progress?.Invoke(result);
@@ -702,7 +733,9 @@ namespace CatDom.CoreSolver
                         // A dependency corridor can miss a useful temporary
                         // relocation. Try a broader target-fixed ordering before
                         // the exhaustive arrangement traversal.
-                        if (SearchRouteBeam(false))
+                        // Give DFS a turn before a failed wide beam spends the
+                        // whole arrangement budget. Complete fallback remains.
+                        if (SearchRouteBeam(false, 128, PreferTargetCorridors() ? 4096 : 16384))
                             return;
                         SearchRouteDepthFirst(12000);
                         if (best != null)
@@ -741,6 +774,7 @@ namespace CatDom.CoreSolver
 
             private void SearchSmallRouteFrontier()
             {
+                TraceStage("small-frontier");
                 int serial = 0;
                 var open = new StableMinHeap<Node>();
                 var seen = new HashSet<Positions>
@@ -788,17 +822,20 @@ namespace CatDom.CoreSolver
             // A layered accelerator reaches longer clearance chains without a
             // best-first plateau consuming all work at shallow arrangements.
             // Keep alternatives for different moved groups; failure is not a proof.
-            private bool SearchRouteBeam(bool aggregateRoutes)
+            private bool SearchRouteBeam(bool aggregateRoutes, int width = 128, int workLimit = 16384, int targetHole = -1, int targetDestination = -1, bool cheapRank = false)
             {
+                TraceStage("beam-" + (cheapRank ? "cheap-" : "") + (targetHole >= 0 ? "target-" + targetHole + "-" + targetDestination : aggregateRoutes ? "sum" : "min") + "-" + width);
                 var frontier = new List<Node>
                 {
                     new Node()
                 };
                 var seen = new HashSet<Positions>();
                 int work = 0;
-                while (frontier.Count > 0 && work < 16384)
+                while (frontier.Count > 0 && work < workLimit)
                 {
                     var pending = new Dictionary<Positions, Node>();
+                    Candidate layerTerminal = null;
+                    Node layerParent = null;
                     foreach (var node in frontier)
                     {
                         token.ThrowIfCancellationRequested();
@@ -814,19 +851,33 @@ namespace CatDom.CoreSolver
                         stats.generated += moves.Count;
                         Candidate terminal = null;
                         foreach (var move in moves)
-                            if (AcceptTerminal(move) && (terminal == null || CompareTerminal(move, terminal) < 0))
+                            if ((!prioritizeRouteKeys || targetHole < 0 || move.hole == targetHole && move.destination == targetDestination)
+                                && AcceptTerminal(move) && (terminal == null || CompareTerminal(move, terminal) < 0))
                                 terminal = move;
                         if (terminal != null)
                         {
-                            best = CompactParkingChain(new Node { parent = node, move = terminal, depth = node.depth + 1 });
-                            bestDepth = best.depth;
-                            stats.firstSolutionDepth = bestDepth;
-                            return true;
+                            if (layerTerminal == null || CompareTerminal(terminal, layerTerminal) < 0)
+                            {
+                                layerTerminal = terminal;
+                                layerParent = node;
+                            }
+                            if (work >= workLimit) break;
+                            continue;
                         }
 
+                        Dictionary<int, CellMask> requestedClearance = null;
+                        HashSet<int> relevant = targetHole >= 0 && cheapRank
+                            ? RouteDependencyGroups(targetHole, state, targetDestination, out requestedClearance) : null;
                         foreach (var move in moves)
                         {
                             if (move.terminal || seen.Contains(move.state) || pending.ContainsKey(move.state))
+                                continue;
+                            if (relevant != null && !relevant.Contains(move.hole))
+                                continue;
+                            // Generate already includes every reachable endpoint in
+                            // one drag. A second consecutive drag of the same group
+                            // has an equivalent successor at the preceding layer.
+                            if (cheapRank && node.move != null && move.hole == node.move.hole)
                                 continue;
                             var aggregation = context.aggregation;
                             try
@@ -834,10 +885,29 @@ namespace CatDom.CoreSolver
                                 // Clearing a dense board can require moving a hole
                                 // away from the currently closest cat. Rank this
                                 // accelerator by all reachable consumption routes.
-                                if (aggregateRoutes)
+                                if (targetHole >= 0)
+                                {
+                                    int position = move.state.GetValue(targetHole);
+                                    var blockers = Occupancy(move.state) ^ masks[targetHole][position];
+                                    move.score = OccupancyPathDistance(targetHole, position, blockers, targetDestination)
+                                        + (cheapRank ? 0 : RouteClearancePenalty(targetHole, move.state, blockers, targetDestination));
+                                    if (requestedClearance != null)
+                                        foreach (var request in requestedClearance)
+                                        {
+                                            int parked = move.state.GetValue(request.Key);
+                                            if (parked >= 0 && !(masks[request.Key][parked] & request.Value).IsZero)
+                                                move.score += 8;
+                                        }
+                                }
+                                else if (aggregateRoutes)
                                 {
                                     context.aggregation = RouteAggregation.ReachableSum;
-                                    move.score = Score(move.state);
+                                    move.score = Score(move.state, !cheapRank);
+                                }
+                                else if (cheapRank)
+                                {
+                                    context.aggregation = RouteAggregation.Minimum;
+                                    move.score = Score(move.state, false);
                                 }
                                 else
                                     move.score = policy.Rank(this, move.state);
@@ -850,10 +920,18 @@ namespace CatDom.CoreSolver
                             pending.Add(move.state, new Node { parent = node, move = move, depth = node.depth + 1 });
                         }
 
-                        if (work >= 16384)
+                        if (work >= workLimit)
                             break;
                     }
 
+
+                    if (layerTerminal != null)
+                    {
+                        best = CompactParkingChain(new Node { parent = layerParent, move = layerTerminal, depth = layerParent.depth + 1 });
+                        bestDepth = best.depth;
+                        stats.firstSolutionDepth = bestDepth;
+                        return true;
+                    }
                     var ordered = new List<Node>(pending.Values);
                     ordered.Sort((a, b) => Compare(a.move, b.move));
                     frontier = new List<Node>();
@@ -861,10 +939,12 @@ namespace CatDom.CoreSolver
                     var groups = new HashSet<int>();
                     foreach (var node in ordered)
                         groups.Add(node.move.hole);
-                    int quota = Math.Max(1, 128 / Math.Max(1, groups.Count));
+                    int quota = Math.Max(1, width / Math.Max(1, groups.Count));
                     var counts = new Dictionary<int, int>();
                     foreach (var node in ordered)
                     {
+                        if (frontier.Count >= width)
+                            break;
                         counts.TryGetValue(node.move.hole, out int used);
                         if (used >= quota)
                             continue;
@@ -875,7 +955,7 @@ namespace CatDom.CoreSolver
 
                     foreach (var node in ordered)
                     {
-                        if (frontier.Count >= 128)
+                        if (frontier.Count >= width)
                             break;
                         if (selected.Add(node.move.state))
                             frontier.Add(node);
@@ -886,10 +966,122 @@ namespace CatDom.CoreSolver
                 return false;
             }
 
+            private bool SearchKeyBeams()
+            {
+                var targets = new List<(int hole, int destination, long score)>();
+                for (int hole = 0; hole < capacities.Length; hole++)
+                {
+                    int position = current.GetValue(hole);
+                    if (position < 0 || linkedGroups[hole].Length != 1 || !CanDrag(hole, position))
+                        continue;
+                    var blockers = Occupancy(current) ^ masks[hole][position];
+                    foreach (int destination in goalAnchors[hole])
+                    {
+                        bool unlocks = false;
+                        for (int cat = 0; cat < catsAlive.Length && !unlocks; cat++)
+                        {
+                            var key = board.cats[cat];
+                            if (!catsAlive[cat] || key.keyColorId < 0 || key.color != Color(hole)
+                                || (masks[hole][destination] & catMasks[cat]).IsZero)
+                                continue;
+                            for (int locked = 0; locked < capacities.Length; locked++)
+                                if (current.GetValue(locked) >= 0 && board.holes[locked].locked
+                                    && board.holes[locked].lockColorId == key.keyColorId)
+                                { unlocks = true; break; }
+                        }
+                        if (!unlocks) continue;
+                        long score = OccupancyPathDistance(hole, position, blockers, destination);
+                        if (score < long.MaxValue / 8) targets.Add((hole, destination, score));
+                    }
+                }
+                targets.Sort((a,b) => a.score != b.score ? a.score.CompareTo(b.score)
+                    : a.hole != b.hole ? a.hole.CompareTo(b.hole) : a.destination.CompareTo(b.destination));
+                int attempts = 0;
+                var tried = new HashSet<int>();
+                foreach (var target in targets)
+                    if (tried.Add(target.hole))
+                    {
+                        if (SearchRouteBeam(false, 4, 64, target.hole, target.destination, cheapRank: true)) return true;
+                        if (++attempts >= 3) break;
+                    }
+                return false;
+            }
+
+            // A fixed target supplies a stable objective across layers. These
+            // bounded passes only change traversal order; every successor is exact.
+            private bool SearchTargetBeams()
+            {
+                var targets = new List<(int hole, int destination, long score)>();
+                for (int hole = 0; hole < capacities.Length; hole++)
+                {
+                    int position = current.GetValue(hole);
+                    if (position < 0 || linkedGroups[hole].Length != 1 || !CanDrag(hole, position))
+                        continue;
+                    var blockers = Occupancy(current) ^ masks[hole][position];
+                    foreach (int destination in goalAnchors[hole])
+                    {
+                        long score = OccupancyPathDistance(hole, position, blockers, destination);
+                        if (score >= long.MaxValue / 8)
+                            continue;
+                        score += RouteClearancePenalty(hole, current, blockers, destination);
+                        targets.Add((hole, destination, score));
+                    }
+                }
+                targets.Sort((a,b) => a.score != b.score ? a.score.CompareTo(b.score) : a.hole != b.hole ? a.hole.CompareTo(b.hole) : a.destination.CompareTo(b.destination));
+                // Spread the first trials across holes before trying additional
+                // destinations of the same hole.
+                var tried = new HashSet<int>();
+                int attempts = 0;
+                int targetWork = Math.Min(64, Math.Max(16, board.holes.Count * 6));
+                foreach (var target in targets)
+                    if (tried.Add(target.hole))
+                    {
+                        if (SearchRouteBeam(false, 4, targetWork, target.hole, target.destination, cheapRank: true))
+                            return true;
+                        if (++attempts >= 3)
+                            break;
+                    }
+                return false;
+            }
+
+            private bool PreferTargetCorridors()
+            {
+                if (board.holes.Count >= 13)
+                    return true;
+                // Several towers expose different next colors after consumption;
+                // keep a corridor objective instead of summing all exposed routes.
+                int towers = 0;
+                foreach (var box in board.boxes)
+                    if (box.tower && ++towers >= 2)
+                        return true;
+                return false;
+            }
+
+            private bool HasLockedHole()
+            {
+                for (int hole = 0; hole < capacities.Length; hole++)
+                    if (current.GetValue(hole) >= 0 && board.holes[hole].locked)
+                        return true;
+                return false;
+            }
+
+            private bool SearchLockedRouteBeam()
+            {
+                if (!HasLockedHole()) return false;
+                bool previous = prioritizeRouteKeys;
+                try
+                {
+                    prioritizeRouteKeys = true;
+                    return SearchRouteBeam(false, 128, 2048);
+                }
+                finally { prioritizeRouteKeys = previous; }
+            }
+
             // A bounded focused traversal is an ordering accelerator, not a
             // solvability test. Failure always returns to the complete search.
             private bool SearchRouteDependencies(bool distanceOnly = false)
             {
+                TraceStage(distanceOnly ? "dependencies-distance" : "dependencies-clearance");
                 var targets = new List<(int hole, int destination, long score)>();
                 for (int i = 0; i < capacities.Length; i++)
                 {
@@ -1105,6 +1297,7 @@ namespace CatDom.CoreSolver
             // parking arrangements remain searchable, without depth/time limits.
             private void SearchRouteDepthFirst(int acceleratorLimit = 0)
             {
+                TraceStage("dfs-" + acceleratorLimit);
                 long startingWork = result.expanded;
                 var seen = new HashSet<Positions>();
                 var stack = new List<RouteFrame>
@@ -1209,6 +1402,7 @@ namespace CatDom.CoreSolver
             // the discovered chain. No committed consumption is undone.
             private Node CompactParkingChain(Node end)
             {
+                TraceStage("compact");
                 var chain = new List<Node>();
                 for (var node = end; node.parent != null; node = node.parent)
                     chain.Add(node);
@@ -2105,7 +2299,8 @@ namespace CatDom.CoreSolver
                 {
                     var copy = new List<Candidate>(cached.Length);
                     foreach (var move in cached)
-                        copy.Add(new Candidate { hole = move.hole, destination = move.destination, state = move.state, pathParents = move.pathParents, pathLength = move.pathLength, terminal = move.terminal });
+                        copy.Add(new Candidate { hole = move.hole, destination = move.destination, state = move.state, pathParents = move.pathParents, pathLength = move.pathLength, terminal = move.terminal,
+                            routeContinuation = move.routeContinuation, consumptionUtility = move.consumptionUtility, futureRank = move.futureRank });
                     return copy;
                 }
 
@@ -2224,8 +2419,11 @@ namespace CatDom.CoreSolver
                 return result;
             }
 
-            private long Score(Positions state)
+            private long Score(Positions state, bool includeClearance = true)
             {
+                var cacheKey = (valid, state, context.aggregation, prioritizeRouteKeys);
+                if (!includeClearance && cheapScoreCache.TryGetValue(cacheKey, out long cachedScore))
+                    return cachedScore;
                 var occupied = Occupancy(state);
                 long score = long.MaxValue, sum = 0;
                 for (int i = 0; i < capacities.Length; i++)
@@ -2255,7 +2453,7 @@ namespace CatDom.CoreSolver
                             if (state.GetValue(member) >= 0)
                                 blockers ^= masks[member][state.GetValue(member)];
                         holeScore = linkedGroups[i].Length > 1 ? LinkedRouteDistance(i, state, blockers) : OccupancyPathDistance(i, p, blockers);
-                        if (linkedGroups[i].Length == 1)
+                        if (includeClearance && linkedGroups[i].Length == 1)
                             holeScore += RouteClearancePenalty(i, state, blockers);
                         if (prioritizeRouteKeys && linkedGroups[i].Length == 1)
                         {
@@ -2292,9 +2490,14 @@ namespace CatDom.CoreSolver
                     sum = sum > long.MaxValue - holeScore ? long.MaxValue : sum + holeScore;
                 }
 
-                if (score == long.MaxValue || context.aggregation == RouteAggregation.Minimum)
-                    return score;
-                return sum;
+                long value = score == long.MaxValue || context.aggregation == RouteAggregation.Minimum ? score : sum;
+                if (!includeClearance)
+                {
+                    if (cheapScoreCache.Count >= 16384)
+                        cheapScoreCache.Clear();
+                    cheapScoreCache[cacheKey] = value;
+                }
+                return value;
             }
 
             // Inspect a suggested corridor before favoring its target. A blocker
@@ -2462,6 +2665,7 @@ namespace CatDom.CoreSolver
                 var key = (valid, hole, target, blockers, 8, 1);
                 if (!occupancyDistances.TryGetValue(key, out var costs))
                 {
+                    var graph = RouteGraph(hole);
                     costs = new long[count];
                     var penalties = distancePenaltiesScratch;
                     Array.Clear(penalties, 0, count);
@@ -2493,7 +2697,7 @@ namespace CatDom.CoreSolver
                         }
                     }
 
-                    bool Allowed(int p) => valid[hole][p] && ((masks[hole][p] & routeFixedMask).IsZero);
+                    bool Allowed(int p) => graph.allowed[p];
                     if (target >= 0)
                     {
                         if (Allowed(target))
@@ -2532,10 +2736,8 @@ namespace CatDom.CoreSolver
 
                         if (item.cost != costs[item.p])
                             continue;
-                        foreach (int p in neighbors[item.p])
+                        foreach (int p in graph.predecessors[item.p])
                         {
-                            if (!Allowed(p) || !CanStep(hole, p, item.p) || !CanEnterCat(hole, item.p, Direction(CellAt(p), CellAt(item.p))))
-                                continue;
                             long cost = item.cost + 1 + penalties[p];
                             if (cost >= costs[p])
                                 continue;
@@ -2544,7 +2746,7 @@ namespace CatDom.CoreSolver
                         }
                     }
 
-                    if (occupancyDistances.Count >= 512)
+                    if (occupancyDistances.Count >= 4096)
                         occupancyDistances.Clear();
                     occupancyDistances[key] = costs;
                 }
@@ -2660,7 +2862,7 @@ namespace CatDom.CoreSolver
                         }
                     }
 
-                    if (occupancyDistances.Count >= 512)
+                    if (occupancyDistances.Count >= 4096)
                         occupancyDistances.Clear();
                     occupancyDistances[key] = costs;
                 }
@@ -2686,6 +2888,9 @@ namespace CatDom.CoreSolver
                         return utilityOrder;
                 }
 
+                int futureOrder = (a.futureRank ?? long.MaxValue).CompareTo(b.futureRank ?? long.MaxValue);
+                if (futureOrder != 0)
+                    return futureOrder;
                 int order = (capacities[a.hole] != 1).CompareTo(capacities[b.hole] != 1);
                 if (order == 0)
                     order = a.pathLength.CompareTo(b.pathLength);
@@ -2696,7 +2901,8 @@ namespace CatDom.CoreSolver
 
             private bool AcceptTerminal(Candidate move)
             {
-                return move.terminal && HasRouteContinuation(move);
+                return move.terminal && (excludedEvents == null || !excludedEvents.Contains((move.hole, move.destination)))
+                    && (excludedEventStates == null || !excludedEventStates.Contains((move.hole, move.state))) && HasRouteContinuation(move);
             }
 
             // Inspect a candidate before committing its consumption. Failure of
@@ -2712,10 +2918,28 @@ namespace CatDom.CoreSolver
                     current = move.state;
                     Consume(move.hole);
                     bool possible = Cleared();
+                    if (possible)
+                        move.futureRank = 0;
                     if (!possible)
                     {
                         Prepare();
                         possible = HasRelaxedCatAssignment() && HasRelaxedProgression() && HasRelaxedGroupTarget();
+                        if (possible)
+                        {
+                            var savedAggregation = context.aggregation;
+                            bool savedKeys = prioritizeRouteKeys;
+                            try
+                            {
+                                context.aggregation = RouteAggregation.Minimum;
+                                prioritizeRouteKeys = false;
+                                move.futureRank = Score(current, false);
+                            }
+                            finally
+                            {
+                                context.aggregation = savedAggregation;
+                                prioritizeRouteKeys = savedKeys;
+                            }
+                        }
                     }
 
                     move.routeContinuation = possible;

@@ -30,7 +30,7 @@ internal static class StageProfile
             var state=engineType.GetField("current",flags).GetValue(engine);
             var generated=(System.Collections.IEnumerable)Measure("generate",()=>engineType.GetMethod("Generate",flags).Invoke(engine,new[]{state}));
             var moves=generated.Cast<object>().ToArray();
-            Measure("rank_candidates",()=>{foreach(var move in moves){var candidateState=move.GetType().GetField("state",flags).GetValue(move);engineType.GetMethod("Score",flags).Invoke(engine,new[]{candidateState});}return (object)moves.Length;});
+            Measure("rank_candidates",()=>{foreach(var move in moves){var candidateState=move.GetType().GetField("state",flags).GetValue(move);engineType.GetMethod("Score",flags).Invoke(engine,new object[]{candidateState,true});}return (object)moves.Length;});
             Measure("continuation_guards",()=>{int count=0;foreach(var move in moves){if(!(bool)move.GetType().GetField("terminal",flags).GetValue(move))continue;engineType.GetMethod("HasRouteContinuation",flags).Invoke(engine,new[]{move});count++;}return (object)count;});
             var result=Reference.CatLevelSolver.Solve(Reference.IO.SolverJson.ReadLevel(fixtureJson,(optimized?Reference.IO.SolverJson.ReadCatalog(shapeJson):(Reference.IO.ShapeCatalog)catalog)),Reference.SolverConfig.CreateRouteClearingDefault());
             Measure("replay_fixture",()=>optimized

@@ -1,0 +1,331 @@
+{
+  "measurementKind": "Single diagnostic phase; capped search; not a full-level solve or acceptance",
+  "fixture": "Level00206.pattern-tier-all.48.input.json",
+  "fixtureHash": "48C8F73BA9B01B7EC53F76A81A1D567DFA98CD34E3A55A005D3249AD143C0367",
+  "assemblyHash": "D90C4A0DB26A18903F35C8F1399F2DF07EBF46F803C4B83B47274576B274F2DB",
+  "method": "pipeline",
+  "limit": 10000,
+  "cancelled": true,
+  "found": false,
+  "replayed": false,
+  "expanded": 9331,
+  "abstractExpanded": 48950,
+  "phaseMs": 3003.7465,
+  "drags": 0,
+  "steps": 0,
+  "trace": [
+    {
+      "expanded": 0,
+      "abstractExpanded": 0,
+      "searchStage": "direct",
+      "ms": 113.1717
+    },
+    {
+      "expanded": 1,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-sum-4",
+      "ms": 117.5245
+    },
+    {
+      "expanded": 129,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-sum-16",
+      "ms": 186.9975
+    },
+    {
+      "expanded": 385,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-sum-16",
+      "ms": 308.8144
+    },
+    {
+      "expanded": 641,
+      "abstractExpanded": 0,
+      "searchStage": "beam-cheap-sum-16",
+      "ms": 415.8785
+    },
+    {
+      "expanded": 641,
+      "abstractExpanded": 0,
+      "searchStage": "pair-pattern-build",
+      "ms": 418.8232
+    },
+    {
+      "expanded": 641,
+      "abstractExpanded": 4472,
+      "searchStage": "pair-pattern-search",
+      "ms": 448.0726
+    },
+    {
+      "expanded": 897,
+      "abstractExpanded": 4472,
+      "searchStage": "pair-pattern-search",
+      "ms": 500.647
+    },
+    {
+      "expanded": 897,
+      "abstractExpanded": 4472,
+      "searchStage": "pair-pattern-build",
+      "ms": 500.7644
+    },
+    {
+      "expanded": 897,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 549.2756
+    },
+    {
+      "expanded": 1153,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 577.8867
+    },
+    {
+      "expanded": 1409,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 611.0468
+    },
+    {
+      "expanded": 1665,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 657.986
+    },
+    {
+      "expanded": 1921,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 685.9749
+    },
+    {
+      "expanded": 2177,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 723.2243
+    },
+    {
+      "expanded": 2433,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 740.4192
+    },
+    {
+      "expanded": 2689,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 766.3751
+    },
+    {
+      "expanded": 2945,
+      "abstractExpanded": 48950,
+      "searchStage": "pair-pattern-search",
+      "ms": 792.9354
+    },
+    {
+      "expanded": 2945,
+      "abstractExpanded": 48950,
+      "searchStage": "depth-2",
+      "ms": 792.9634
+    },
+    {
+      "expanded": 2963,
+      "abstractExpanded": 48950,
+      "searchStage": "depth-2",
+      "ms": 799.1479
+    },
+    {
+      "expanded": 2963,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 800.5656
+    },
+    {
+      "expanded": 2964,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 804.5759
+    },
+    {
+      "expanded": 2971,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 806.1157
+    },
+    {
+      "expanded": 2978,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 806.3023
+    },
+    {
+      "expanded": 2985,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 806.4906
+    },
+    {
+      "expanded": 2987,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 806.5129
+    },
+    {
+      "expanded": 3212,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 992.3505
+    },
+    {
+      "expanded": 3401,
+      "abstractExpanded": 48950,
+      "searchStage": "dependencies-clearance",
+      "ms": 1057.1965
+    },
+    {
+      "expanded": 3772,
+      "abstractExpanded": 48950,
+      "searchStage": "depth-3",
+      "ms": 1231.5682
+    },
+    {
+      "expanded": 3939,
+      "abstractExpanded": 48950,
+      "searchStage": "depth-3",
+      "ms": 1236.5104
+    },
+    {
+      "expanded": 3939,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1236.5247
+    },
+    {
+      "expanded": 4195,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1287.5781
+    },
+    {
+      "expanded": 4451,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1364.0645
+    },
+    {
+      "expanded": 4707,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1465.8476
+    },
+    {
+      "expanded": 4963,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1574.5313
+    },
+    {
+      "expanded": 5219,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1677.3813
+    },
+    {
+      "expanded": 5475,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1771.9201
+    },
+    {
+      "expanded": 5731,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1859.9588
+    },
+    {
+      "expanded": 5987,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 1935.8421
+    },
+    {
+      "expanded": 6243,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2015.0525
+    },
+    {
+      "expanded": 6499,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2107.3912
+    },
+    {
+      "expanded": 6755,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2203.0146
+    },
+    {
+      "expanded": 7011,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2288.8222
+    },
+    {
+      "expanded": 7267,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2363.6727
+    },
+    {
+      "expanded": 7523,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2437.6001
+    },
+    {
+      "expanded": 7779,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2530.0256
+    },
+    {
+      "expanded": 8035,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2603.8041
+    },
+    {
+      "expanded": 8291,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2681.6064
+    },
+    {
+      "expanded": 8547,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2758.3909
+    },
+    {
+      "expanded": 8803,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2834.6349
+    },
+    {
+      "expanded": 9059,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2917.4486
+    },
+    {
+      "expanded": 9315,
+      "abstractExpanded": 48950,
+      "searchStage": "beam-min-128",
+      "ms": 2995.7347
+    }
+  ],
+  "moves": []
+}

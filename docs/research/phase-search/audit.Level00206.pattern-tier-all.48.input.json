@@ -1,0 +1,268 @@
+{
+  "measurementKind": "Single diagnostic phase; capped search; not a full-level solve or acceptance",
+  "fixture": "Level00206.pattern-tier-all.48.input.json",
+  "fixtureHash": "48C8F73BA9B01B7EC53F76A81A1D567DFA98CD34E3A55A005D3249AD143C0367",
+  "assemblyHash": "D90C4A0DB26A18903F35C8F1399F2DF07EBF46F803C4B83B47274576B274F2DB",
+  "method": "audit",
+  "limit": 10000,
+  "cancelled": false,
+  "found": false,
+  "replayed": false,
+  "expanded": 0,
+  "abstractExpanded": 25882,
+  "phaseMs": 147.064,
+  "drags": 0,
+  "steps": 0,
+  "trace": [],
+  "auditRows": [
+    {
+      "target": 1,
+      "goals": 4,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 2,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 3,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ]
+    },
+    {
+      "target": 2,
+      "goals": 1,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 1,
+          "unreachable": false,
+          "distance": 2
+        },
+        {
+          "other": 3,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ]
+    },
+    {
+      "target": 3,
+      "goals": 3,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 1,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 2,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 4,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 5,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 7,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 8,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 9,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 10,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 11,
+          "unreachable": false,
+          "distance": 1
+        },
+        {
+          "other": 12,
+          "unreachable": false,
+          "distance": 1
+        }
+      ]
+    },
+    {
+      "target": 9,
+      "goals": 1,
+      "validStart": true,
+      "pairs": [
+        {
+          "other": 0,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 1,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 2,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 3,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 4,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 5,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 7,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 8,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 10,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 11,
+          "unreachable": true,
+          "distance": 2147483647
+        },
+        {
+          "other": 12,
+          "unreachable": true,
+          "distance": 2147483647
+        }
+      ]
+    }
+  ],
+  "moves": []
+}
