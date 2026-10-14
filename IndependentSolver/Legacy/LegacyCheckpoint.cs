@@ -46,8 +46,8 @@ namespace CatDom.CoreSolver
                     savedCapacities = new int[engine.capacities.Length]; savedLayers = new int[engine.layers.Length];
                     savedOffsets = new int[engine.boxOffsets.Length]; savedAlive = new bool[engine.catsAlive.Length];
                     draggable = new bool[engine.capacities.Length];
-                    int size = engine.board.holes.Count * 3 + engine.board.cats.Count + engine.board.boxes.Count + engine.board.covers.Count;
-                    foreach (var box in engine.board.boxes) size += box.cats.Length;
+                    int size = engine.board.holes.Count * 9 + engine.board.cats.Count * 2 + engine.board.boxes.Count + engine.board.covers.Count + engine.board.fences.Count;
+                    foreach (var box in engine.board.boxes) size += box.cats.Length * 2;
                     mutable = new int[size];
                 }
                 internal void Save(Engine e)
@@ -59,15 +59,16 @@ namespace CatDom.CoreSolver
                     savedValid = e.valid; savedGoals = e.goals; savedDistances = e.distances; savedAnchors = e.goalAnchors;
                     savedTargets = e.targetDistances; savedEntries = e.catEntryBlocks; savedFixed = e.routeFixedMask;
                     int at = 0;
-                    foreach (var hole in e.board.holes) { mutable[at++] = hole.numIced; mutable[at++] = hole.hiddenCount; mutable[at++] = hole.locked ? 1 : 0; }
-                    foreach (var cat in e.board.cats) mutable[at++] = cat.numIced;
-                    foreach (var box in e.board.boxes) { mutable[at++] = box.requiredHolesToUnlock; foreach (var cat in box.cats) mutable[at++] = cat.numIced; }
+                    foreach (var hole in e.board.holes) { mutable[at++] = hole.numIced; mutable[at++] = hole.hiddenCount; mutable[at++] = hole.locked ? 1 : 0; mutable[at++] = hole.movementType; mutable[at++] = hole.movementTypeLimit; mutable[at++] = hole.runesealedUnlockHoleIndex; mutable[at++] = hole.closed ? 1 : 0; mutable[at++] = hole.countdownMoves; mutable[at++] = hole.bombRemaining; }
+                    foreach (var cat in e.board.cats) { mutable[at++] = cat.numIced; mutable[at++] = cat.mysteryBoxId; }
+                    foreach (var box in e.board.boxes) { mutable[at++] = box.requiredHolesToUnlock; foreach (var cat in box.cats) { mutable[at++] = cat.numIced; mutable[at++] = cat.mysteryBoxId; } }
                     foreach (var cover in e.board.covers) mutable[at++] = cover.remainingHits;
+                    foreach (var fence in e.board.fences) mutable[at++] = fence.blocked ? 1 : 0;
                 }
                 internal int PreviousBoxLock(Engine e, int index)
                 {
-                    int at = e.board.holes.Count * 3 + e.board.cats.Count;
-                    for (int i = 0; i < index; i++) at += 1 + e.board.boxes[i].cats.Length;
+                    int at = e.board.holes.Count * 9 + e.board.cats.Count * 2;
+                    for (int i = 0; i < index; i++) at += 1 + e.board.boxes[i].cats.Length * 2;
                     return mutable[at];
                 }
                 internal void Restore(Engine e)
@@ -78,10 +79,11 @@ namespace CatDom.CoreSolver
                     e.valid = savedValid; e.goals = savedGoals; e.distances = savedDistances; e.goalAnchors = savedAnchors;
                     e.targetDistances = savedTargets; e.catEntryBlocks = savedEntries; e.routeFixedMask = savedFixed;
                     int at = 0;
-                    foreach (var hole in e.board.holes) { hole.numIced = mutable[at++]; hole.hiddenCount = mutable[at++]; hole.locked = mutable[at++] != 0; }
-                    foreach (var cat in e.board.cats) cat.numIced = mutable[at++];
-                    foreach (var box in e.board.boxes) { box.requiredHolesToUnlock = mutable[at++]; foreach (var cat in box.cats) cat.numIced = mutable[at++]; }
+                    foreach (var hole in e.board.holes) { hole.numIced = mutable[at++]; hole.hiddenCount = mutable[at++]; hole.locked = mutable[at++] != 0; hole.movementType = mutable[at++]; hole.movementTypeLimit = mutable[at++]; hole.runesealedUnlockHoleIndex = mutable[at++]; hole.closed = mutable[at++] != 0; hole.countdownMoves = mutable[at++]; hole.bombRemaining = mutable[at++]; }
+                    foreach (var cat in e.board.cats) { cat.numIced = mutable[at++]; cat.mysteryBoxId = mutable[at++]; }
+                    foreach (var box in e.board.boxes) { box.requiredHolesToUnlock = mutable[at++]; foreach (var cat in box.cats) { cat.numIced = mutable[at++]; cat.mysteryBoxId = mutable[at++]; } }
                     foreach (var cover in e.board.covers) cover.remainingHits = mutable[at++];
+                    foreach (var fence in e.board.fences) fence.blocked = mutable[at++] != 0;
                     active = false;
                 }
             }

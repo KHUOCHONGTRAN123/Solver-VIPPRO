@@ -6,11 +6,11 @@ using Reference = CatDom.Reference.V42;
 
 internal static class HybridVerification
 {
-    internal static void Run(string root)
+    internal static void Run(string root, string outputDirectory = null)
     {
         var catalog=Reference.IO.SolverJson.ReadCatalog(File.ReadAllText(Path.Combine(root,"IndependentSolver/IO/HoleShapes.json")));
         var rows=new List<object>();
-        string dir=Path.Combine(root,"docs/benchmarks/v2");Directory.CreateDirectory(dir);
+        string dir=outputDirectory==null ? Path.Combine(root,"docs/benchmarks/v2") : Path.GetFullPath(outputDirectory);Directory.CreateDirectory(dir);
         Product.CatLevelSolver.SolveLevel(File.ReadAllText(Path.Combine(root,"Levels/Level00001.json")));
         foreach(string file in Directory.GetFiles(Path.Combine(root,"Levels"),"*.json").OrderBy(f=>f))
         {

@@ -16,6 +16,8 @@ string outputJson = JsonConvert.SerializeObject(result);
 
 Có thể truyền `CancellationToken` để hủy. Mỗi lần gọi sở hữu toàn bộ trạng thái mutable; các lời gọi độc lập có thể chạy đồng thời. Input JSON không bị thay đổi.
 
+Trong source chuẩn bị cho 3.0, `Cat.bonusTime` và `Cat.timeLimited` được bỏ qua có chủ đích, kể cả Cat trong box/tower. Hai field này không gây `UnsupportedMechanics` và không tham gia tìm lời giải. Gói 2.0.0 đã phát hành chưa được đóng gói lại với thay đổi này.
+
 ## Output
 
 Output có chín trường:

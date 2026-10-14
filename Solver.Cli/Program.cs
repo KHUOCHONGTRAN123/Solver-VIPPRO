@@ -20,7 +20,7 @@ try
     var result=CatLevelSolver.SolveLevel(level,cancellation.Token);
     string json=JsonConvert.SerializeObject(result,Formatting.Indented);
     if(output==null)Console.WriteLine(json);else File.WriteAllText(output,json);
-    return result.status switch {SolverStatus.Solved=>0,SolverStatus.Cancelled=>130,SolverStatus.NoNextCatReachable=>1,_=>2};
+    return result.status switch {SolverStatus.Solved=>0,SolverStatus.Cancelled=>130,SolverStatus.NoNextCatReachable=>1,SolverStatus.CountdownExceeded=>3,_=>2};
 }
 catch(Exception ex) when(ex is IOException||ex is UnauthorizedAccessException)
 {Console.Error.WriteLine(ex.Message);return 2;}

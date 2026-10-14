@@ -7,8 +7,29 @@ using Reference = CatDom.Reference.V42;
 using ReferenceJson = CatDom.Reference.V42.IO.SolverJson;
 
 string root = Path.GetFullPath(args.Length > 1 ? args[1] : ".");
+if(args.Length>0&&args[0]=="spawner-result-replay"){SpawnerResultReplay.Run(root,args[2],args.Length>3?args[3]:null);return;}
+if(args.Length>0&&args[0]=="spawner-tests"){SpawnerTests.Run();V3IndependentSpawnerTests.Run(root);return;}
+if(args.Length>0&&args[0]=="bomb-priority-tests"){BombPriorityTests.Run();V3BombTests.Run(root);BombQueueRelaxationTests.Run();V3IndependentSpawnerTests.Run(root);return;}
+if(args.Length>0&&args[0]=="expand-trace"){ExpandTrace.Run(root,args[2],args[3],int.Parse(args[4]),args.Length>5?args[5]:null);return;}
+if(args.Length>0&&args[0]=="expand-tests"){ExpandTests.Run();PreparedPhaseCacheTests.Run();PhaseStateKeyTests.Run();V3IndependentCoverTests.Run(root);return;}
+if(args.Length>0&&args[0]=="group3-barrie-tests"){Group3BarrieTests.Run(root);return;}
+if(args.Length>0&&args[0]=="group3-elevator-geometry-tests"){Group3ElevatorGeometryTests.Run(root);return;}
+if(args.Length>0&&args[0]=="group2-profile"){Group2Profile.Run(root,args[2],args[3]);return;}
+if(args.Length>0&&args[0]=="group1-stage-trace"){Group1StageTrace.Run(root,args[2]);return;}
+if(args.Length>0&&args[0]=="screen-corpus"){V3Screen.Run(root,null,args[2],args[3]);return;}
+if(args.Length>0&&args[0]=="v3-replay-existing"){V3ReplayExisting.Run(root,args.Length>2?args[2]:null,args.Length>3?args[3]:null,args.Length>4?args[4]:null);return;}
+if(args.Length>0&&args[0]=="v3-bomb-tests"){V3BombTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-countdown-oracle-tests"){V3CountdownOracleTests.Run();return;}
+if(args.Length>0&&args[0]=="v3-secret-tests"){V3SecretTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-barricade-tests"){V3BarricadeTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-mystery-tests"){V3MysteryTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-mechanics-tests"){V3MechanicsTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-fence-tests"){V3FenceTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-curtain-tests"){V3CurtainTests.Run(root);return;}
+if(args.Length>0&&args[0]=="v3-screen"){V3Screen.Run(root,args.Length>2?args[2]:null,args.Length>3?args[3]:null,args.Length>4?args[4]:null);return;}
+if(args.Length>0&&args[0]=="generator-oracle"){GeneratorOracle.Run(root);return;}
 if(args.Length>0&&args[0]=="budget-5000"){EasyComparison.Run(root,true);return;}
-if(args.Length>0&&args[0]=="hybrid-check"){HybridVerification.Run(root);return;}
+if(args.Length>0&&args[0]=="hybrid-check"){HybridVerification.Run(root,args.Length>2?args[2]:null);return;}
 if(args.Length>0&&args[0]=="easy-comparison"){EasyComparison.Run(root);return;}
 if(args.Length>0&&args[0]=="route-graph-tests"){RouteGraphTests.Run(root);return;}
 if(args.Length>0&&args[0]=="phase-search"){PhaseSearch.Run(root,args[2],args[3],args.Length>4?int.Parse(args[4]):10000);return;}
@@ -101,6 +122,17 @@ if(args.Length>0 && args[0]=="all")
 var random=new Random(42);
 HybridTests.Run(root);
 CheckpointTests.Run(root);
+CoverMaskCacheTests.Run();
+PreparedPhaseCacheTests.Run();
+LinkedAssignmentTests.Run();
+PhaseStateKeyTests.Run();
+IdleConsumptionTests.Run();
+BombQueueRelaxationTests.Run();
+Group2CompatibilityTests.Run(root);
+PlugTests.Run();
+SpawnerTests.Run();
+ExpandTests.Run();
+V3IndependentReplayTests.Run(root);
 RouteTests.Run();
 var heap=new Product.StableMinHeap<int>();
 var orderedHeap=new SortedSet<(long score,int serial,int node)>(Comparer<(long score,int serial,int node)>.Create((a,b)=>a.score!=b.score?a.score.CompareTo(b.score):a.serial.CompareTo(b.serial)));
@@ -144,3 +176,13 @@ Assert(parallel.All(r=>r.status==Product.SolverStatus.Solved),"Concurrent solves
 Console.WriteLine("PASS mask equivalence, malformed JSON, cancellation, concurrent calls");
 static void Assert(bool condition,string message){if(!condition)throw new Exception(message);}
 static string Hash(string path)=>Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path)));
+
+
+
+
+
+
+
+
+
+

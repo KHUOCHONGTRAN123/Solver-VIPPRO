@@ -9,10 +9,13 @@ internal static class CheckpointTests
         const BindingFlags flags=BindingFlags.Instance|BindingFlags.NonPublic|BindingFlags.Public;
         var catalog=Product.IO.SolverJson.ReadCatalog(File.ReadAllText(Path.Combine(root,"IndependentSolver/IO/HoleShapes.json")));
         var board=Product.IO.SolverJson.ReadLevel(File.ReadAllText(Path.Combine(root,"Levels/Level00206.json")),catalog);
+        board.fences.Add(new Product.FenceEdgeInput{position=new Product.Cell(0,0),direction=0,color=0});
+        board.plugs.Add(new Product.PlugInput{id=0,color=1,position=new Product.Cell(0,0)});
+        board.spawners.Add(new Product.SpawnerInput{holeIds=new[]{0}});
         var type=typeof(Product.CatLevelSolver).GetNestedType("Engine",BindingFlags.NonPublic);
         var engine=Activator.CreateInstance(type,flags,null,new object[]{board,new Product.EngineContext(),CancellationToken.None,new Product.EngineResult()},null);
         type.GetMethod("Prepare",flags).Invoke(engine,null);
-        var fields=new[]{"capacities","layers","boxOffsets","catsAlive","current","valid","goals","distances","goalAnchors","targetDistances","catEntryBlocks","routeFixedMask"};
+        var fields=new[]{"capacities","layers","boxOffsets","catsAlive","current","valid","goals","distances","goalAnchors","targetDistances","catEntryBlocks","routeFixedMask","fenceStepPhase"};
         var original=fields.ToDictionary(name=>name,name=>type.GetField(name,flags).GetValue(engine));
         var arrays=original.Where(pair=>pair.Value is Array).ToDictionary(pair=>pair.Key,pair=>JsonConvert.SerializeObject(pair.Value));
         string originalBoard=JsonConvert.SerializeObject(board);
@@ -21,11 +24,14 @@ internal static class CheckpointTests
         {
             foreach(var name in new[]{"capacities","layers","boxOffsets"})
             {var values=(int[])original[name];for(int i=0;i<values.Length;i++)values[i]+=7;}
+            foreach(var spawner in board.spawners)spawner.consumed++;
+            foreach(var plug in board.plugs)plug.alive=!plug.alive;
             var alive=(bool[])original["catsAlive"];for(int i=0;i<alive.Length;i++)alive[i]=!alive[i];
-            foreach(var hole in board.holes){hole.numIced+=2;hole.hiddenCount+=3;hole.locked=!hole.locked;}
-            foreach(var cat in board.cats)cat.numIced+=2;
-            foreach(var box in board.boxes){box.requiredHolesToUnlock+=3;foreach(var cat in box.cats)cat.numIced+=4;}
+            foreach(var hole in board.holes){hole.numIced+=2;hole.hiddenCount+=3;hole.locked=!hole.locked;hole.movementType=2;hole.movementTypeLimit+=3;hole.runesealedUnlockHoleIndex=0;hole.closed=!hole.closed;hole.countdownMoves+=4;hole.bombRemaining+=2;hole.isPlug=!hole.isPlug;hole.pendingSpawn=!hole.pendingSpawn;hole.expandPicked=!hole.expandPicked;}
+            foreach(var cat in board.cats){cat.numIced+=2;cat.mysteryBoxId=0;}
+            foreach(var box in board.boxes){box.requiredHolesToUnlock+=3;foreach(var cat in box.cats){cat.numIced+=4;cat.mysteryBoxId=1;}}
             foreach(var cover in board.covers)cover.remainingHits+=5;
+            foreach(var fence in board.fences)fence.blocked=!fence.blocked;
             type.GetMethod("Prepare",flags).Invoke(engine,null);
             throw new OperationCanceledException();
         }
@@ -48,7 +54,7 @@ internal static class CheckpointTests
         void CompareCachedMoves()
         {
             var state=type.GetField("current",flags).GetValue(engine);
-            var fresh=(System.Collections.IList)type.GetMethod("GenerateUncached",flags).Invoke(engine,new[]{state});
+            var fresh=(System.Collections.IList)type.GetMethod("GenerateUncached",flags).Invoke(engine,new object[]{state,-1,false});
             type.GetMethod("Generate",flags).Invoke(engine,new[]{state});
             var cached=(System.Collections.IList)type.GetMethod("Generate",flags).Invoke(engine,new[]{state});
             if(fresh.Count!=cached.Count)throw new Exception("Cached move count mismatch");
@@ -63,3 +69,9 @@ internal static class CheckpointTests
         Console.WriteLine("PASS checkpoint mutation/phase restoration after cancellation and reuse");
     }
 }
+
+
+
+
+
+

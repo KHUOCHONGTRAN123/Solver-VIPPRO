@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- Expand/Bomb/Spawner/Curtain improvements and geometry caching.
+- Countdown-free search with original-limit audit and CountdownExceeded reporting.
+- Updated batch tools build current source; mechanic benchmark limits documented in docs/RELEASE_3.0.0.md.
+
 ## 2.0.0
 
 - Chạy solver 1.0.0 tối đa 10.000 full-state expansions; khi chưa giải xong thì chạy solver cải tiến từ đầu level. Không chọn thuật toán bằng thời gian hoặc ID level.
@@ -12,3 +18,4 @@
 ## 1.0.0
 
 - Release solver v42, API .NET Standard 2.1, CLI .NET 10 và bundle Unity.
+

@@ -76,7 +76,7 @@ namespace CatDom.CoreSolver
                 throw new ArgumentException("Input/context is null.");
             if (b.width <= 0 || b.height <= 0 || (long)b.width * b.height > int.MaxValue)
                 throw new ArgumentException("Invalid board dimensions.");
-            if (b.holes == null || b.cats == null || b.boxes == null || b.obstacles == null || b.links == null || b.covers == null || b.colorPaths == null || b.ignoredMechanics == null)
+            if (b.holes == null || b.cats == null || b.boxes == null || b.obstacles == null || b.links == null || b.covers == null || b.colorPaths == null || b.fences == null || b.ignoredMechanics == null)
                 throw new ArgumentException("Input collections cannot be null.");
             bool Inside(Cell p) => p.x >= 0 && p.y >= 0 && p.x < b.width && p.y < b.height;
             var occupied = new HashSet<Cell>();
@@ -93,7 +93,7 @@ namespace CatDom.CoreSolver
             {
                 if (h == null || !ids.Add(h.id) || h.remaining <= 0 || h.movementType < 0 || h.movementType > 2 || h.footprint == null || h.footprint.Length == 0 || !Inside(h.position))
                     throw new ArgumentException("Invalid hole definition or duplicate ID.");
-                if (h.layerColors == null || h.layerCounts == null || h.gates == null || h.layerColors.Length != h.layerCounts.Length || h.layerColors.Length > 2 || h.numIced < 0 || h.hiddenCount < 0)
+                if (h.layerColors == null || h.layerCounts == null || h.gates == null || h.layerColors.Length != h.layerCounts.Length || h.layerColors.Length > 2 || h.numIced < 0 || h.hiddenCount < 0 || h.movementTypeLimit < 0 || h.runesealedUnlockHoleIndex < -1 || h.runesealedUnlockHoleIndex >= b.holes.Count)
                     throw new ArgumentException("Invalid hole mechanics.");
                 for (int i = 0; i < h.layerCounts.Length; i++)
                     if (h.layerCounts[i] <= 0)
@@ -101,7 +101,8 @@ namespace CatDom.CoreSolver
                 foreach (var gate in h.gates)
                     if (gate.directions < 0 || gate.directions > 15 || Array.IndexOf(h.footprint, gate.local) < 0)
                         throw new ArgumentException("Invalid gate footprint/directions.");
-                foreach (var d in h.footprint)
+                if (h.pendingSpawn) continue;
+                foreach (var d in ExpandGeometry.Footprint(h,false))
                 {
                     var p = new Cell(h.position.x + d.x, h.position.y + d.y);
                     if (!Inside(p) || !occupied.Add(p))
@@ -120,6 +121,11 @@ namespace CatDom.CoreSolver
                     throw new ArgumentException("Cat overlaps an obstacle or wrong-color hole.");
             }
 
+            ids.Clear();
+            var plugCells = new HashSet<Cell>();
+            foreach (var plug in b.plugs)
+                if (plug == null || !ids.Add(plug.id) || !Inside(plug.position) || !plugCells.Add(plug.position) || catCells.Contains(plug.position) || b.obstacles.Contains(plug.position))
+                    throw new ArgumentException("Invalid plug position/ID or overlapping grid node.");
             ids.Clear();
             foreach (var box in b.boxes)
             {
@@ -141,10 +147,13 @@ namespace CatDom.CoreSolver
                 if (cover == null || !ids.Add(cover.id) || cover.remainingHits < 0 || cover.cells == null)
                     throw new ArgumentException("Invalid cover.");
                 foreach (var cell in cover.cells)
-                    if (!Inside(cell))
+                    if (!cover.barricade && !Inside(cell))
                         throw new ArgumentException("Cover outside board.");
             }
 
+            foreach (var fence in b.fences)
+                if (fence == null || fence.direction < 0 || fence.direction > 3)
+                    throw new ArgumentException("Invalid fence edge.");
             foreach (var path in b.colorPaths)
                 if (!Inside(path.position))
                     throw new ArgumentException("Color path outside board.");
@@ -318,6 +327,7 @@ namespace CatDom.CoreSolver
             internal bool terminal;
             internal long score;
             internal long? consumptionUtility;
+            internal long? curtainPriority;
             internal long? futureRank;
             internal bool? routeContinuation;
             internal string consumptionPhase;
@@ -338,6 +348,8 @@ namespace CatDom.CoreSolver
                 = new Dictionary<(bool[][], Positions, RouteAggregation, bool), long>();
             private readonly Dictionary<(bool[][] phase, int hole, int target, Positions state), long> routeClearanceScores = new Dictionary<(bool[][], int, int, Positions), long>();
             private BoardInput board;
+            private FenceTopology fenceTopology;
+            private FenceTopology Fences => fenceTopology ?? (fenceTopology = new FenceTopology(board.fences));
             private static readonly RoutePolicy SharedPolicy = new RoutePolicy();
             private readonly RoutePolicy policy = SharedPolicy;
             private EngineContext context;
@@ -350,6 +362,7 @@ namespace CatDom.CoreSolver
             private readonly int[] layers;
             private readonly int[][] linkedGroups;
             private readonly bool[] catsAlive;
+            private readonly int[] catAtCell;
             private readonly CellMask[] catMasks, boxMasks;
             private Positions current;
             private bool[][] valid, goals;
@@ -371,6 +384,7 @@ namespace CatDom.CoreSolver
                 this.context = context;
                 this.token = token;
                 this.result = result;
+                if(board.elevators.Count>0)elevatorPlans=ElevatorPreparation.Prepare(board);
                 
                 count = board.width * board.height;
                 InitializeScratch();
@@ -402,13 +416,16 @@ namespace CatDom.CoreSolver
                     linkedGroups[i] = members.ToArray();
                 }
 
+                catAtCell = new int[count];
+                for (int p = 0; p < count; p++) catAtCell[p] = -1;
                 catsAlive = new bool[board.cats.Count];
                 catMasks = new CellMask[catsAlive.Length];
                 boxMasks = new CellMask[boxOffsets.Length];
                 for (int i = 0; i < catsAlive.Length; i++)
                 {
-                    catsAlive[i] = true;
-                    catMasks[i] = Bit(board.cats[i].position);
+                    catsAlive[i] = !board.cats[i].pendingSpawn;
+                    if(catsAlive[i])catAtCell[Index(board.cats[i].position)] = i;
+                    catMasks[i] = Inside(board.cats[i].position)?Bit(board.cats[i].position):CellMask.Zero;
                 }
 
                 for (int i = 0; i < boxOffsets.Length; i++)
@@ -443,7 +460,7 @@ namespace CatDom.CoreSolver
                     CheckBudget();
                     var h = board.holes[i];
                     capacities[i] = h.remaining;
-                    positions[i] = Index(h.position);
+                    positions[i] = h.pendingSpawn ? -1 : Index(h.position);
                     masks[i] = new CellMask[count];
                     for (int p = 0; p < count; p++)
                     {
@@ -481,6 +498,10 @@ namespace CatDom.CoreSolver
                 }
 
                 current = new Positions(positions);
+                InitializeExpandMasks();
+                InitializeBarries();
+                InitializePreparedCache();
+                shortRouteAccelerators=preparedCacheEnabled && board.holes.Exists(h=>h.movementTypeLimit>0);
             }
 
             private int Index(Cell p) => p.x + board.width * p.y;
@@ -489,26 +510,37 @@ namespace CatDom.CoreSolver
             private Cell CellAt(int p) => (uint)p < (uint)count ? cellCoordinates[p] : new Cell(p % board.width, p / board.width);
             private CellMask Bit(Cell p) => CellMask.One << Index(p);
             private int Color(int hole) => board.holes[hole].layerColors.Length == 0 ? board.holes[hole].color : board.holes[hole].layerColors[layers[hole]];
+            private int[] cachedCoverHits;
+            private CellMask cachedCoverMask;
             private CellMask CoverMask()
             {
+                if(board.covers.Count==0)return CellMask.Zero;
+                bool same=cachedCoverHits!=null;
+                if(same)
+                    for(int c=0;c<cachedCoverHits.Length;c++)
+                        if(cachedCoverHits[c]!=board.covers[c].remainingHits){same=false;break;}
+                if(same)return cachedCoverMask;
+                if(cachedCoverHits==null)cachedCoverHits=new int[board.covers.Count];
+                for(int c=0;c<cachedCoverHits.Length;c++)cachedCoverHits[c]=board.covers[c].remainingHits;
                 CellMask mask = CellMask.Zero;
                 foreach (var cover in board.covers)
-                    if (cover.remainingHits > 0)
-                        foreach (var cell in cover.cells)
-                            mask |= Bit(cell);
+                    if (!cover.pendingSpawn && cover.remainingHits > 0)
+                        for (int i = 0; i < (cover.barricade ? cover.remainingHits : cover.cells.Length); i++)
+                            if (Inside(cover.cells[i])) mask |= Bit(cover.cells[i]);
+                cachedCoverMask=mask;
                 return mask;
             }
 
             private bool CanDrop(int hole, int anchor)
             {
                 var h = board.holes[hole];
-                return anchor >= 0 && h.numIced == 0 && !h.locked && h.hiddenCount == 0 && (masks[hole][anchor] & CoverMask()).IsZero;
+                return anchor >= 0 && h.numIced == 0 && !h.locked && !h.closed && h.runesealedUnlockHoleIndex < 0 && h.hiddenCount == 0 && (masks[hole][anchor] & CoverMask()).IsZero;
             }
 
             private bool CanDrag(int hole, int anchor)
             {
                 var h = board.holes[hole];
-                return anchor >= 0 && h.numIced == 0 && !h.locked && (masks[hole][anchor] & CoverMask()).IsZero;
+                return anchor >= 0 && h.numIced == 0 && !h.locked && h.runesealedUnlockHoleIndex < 0 && (masks[hole][anchor] & CoverMask()).IsZero;
             }
 
             private int GateBits(int hole, Cell local)
@@ -557,12 +589,14 @@ namespace CatDom.CoreSolver
             private bool BoxTouches(int hole, int anchor, int boxIndex)
             {
                 var box = board.boxes[boxIndex];
-                if (boxOffsets[boxIndex] >= box.colors.Length || box.requiredHolesToUnlock > 0 || box.colors[boxOffsets[boxIndex]] != Color(hole))
+                if (box.pendingSpawn || boxOffsets[boxIndex] >= box.colors.Length || box.requiredHolesToUnlock > 0 || box.colors[boxOffsets[boxIndex]] != Color(hole))
                     return false;
+                // Runtime DropBoxCat/DropTower match queue color directly;
+                // CanBeDroppedIntoHole gates board-cell entry only.
                 if ((masks[hole][anchor] & boxMasks[boxIndex]).IsZero)
                     return false;
                 var origin = CellAt(anchor);
-                foreach (var local in board.holes[hole].footprint)
+                foreach (var local in Footprint(hole))
                 {
                     if (BoxTouchesCell(hole, origin, local, box))
                         return true;
@@ -575,10 +609,17 @@ namespace CatDom.CoreSolver
             {
                 var cell = new Cell(origin.x + local.x, origin.y + local.y);
                 bool touches = box.tower ? Math.Abs(cell.x - box.position.x) + Math.Abs(cell.y - box.position.y) == 1 : cell.Equals(box.mouth);
-                return touches && (GateBits(hole, local) & (1 << Direction(cell, box.position))) == 0;
+                return touches && (board.fences.Count == 0 || !Fences.Blocks(cell, box.position)) && (GateBits(hole, local) & (1 << Direction(cell, box.position))) == 0;
             }
 
+            // Eventual assignment may use a freed axis after another hole finishes.
+            private bool CanStepForAssignment(int hole, int from, int to)
+                => board.holes[hole].movementTypeLimit > 0 || AxisAllows(hole, from, to);
+
             private bool CanStep(int hole, int from, int to)
+                => AxisAllows(hole, from, to) && (board.fences.Count == 0 || FenceStepAllows(hole, from, to));
+
+            private bool AxisAllows(int hole, int from, int to)
             {
                 int type = board.holes[hole].movementType;
                 return type == 0 || (type == 1 ? CellAt(from).x == CellAt(to).x : CellAt(from).y == CellAt(to).y);
@@ -597,7 +638,75 @@ namespace CatDom.CoreSolver
             }
             internal void Run()
             {
+                RefreshElevators();
                 result.initialEaten = Consume();
+                RefreshBarries();
+                if (BombFailed())
+                {
+                    result.status = SolveStatus.NoNextCatReachable;
+                    result.message = "Initial consumption triggered a hole bomb.";
+                    return;
+                }
+                if(!Cleared() && HasActiveBomb() && TryBombPlan())
+                {
+                    result.status=SolveStatus.Solved;
+                    result.message="All playable holes finished and cats cleared.";
+                    return;
+                }
+                // A bounded event planner can resolve an order of completion
+                // cheaply before enumerating every intermediate drag endpoint.
+                // Countdown/spawner/expand require their drag-boundary simulator.
+                // Failed attempts restore the initial state and retain all work.
+                if(!Cleared() && TryCurtainPlan())
+                {
+                    result.status=SolveStatus.Solved;
+                    result.message="All playable holes finished and cats cleared.";
+                    return;
+                }
+                if (!Cleared() && board.elevators.Count>0 && !hasExpandableHoles && board.spawners.Count==0 && board.barries.Count==0 &&
+                    !board.holes.Exists(h=>h.countdownMoves>0 || h.bombRemaining>0) && TryDecisionPlan())
+                {
+                    result.status=SolveStatus.Solved;
+                    result.message="All playable holes finished and cats cleared.";
+                    return;
+                }
+                if (!Cleared() && !hasExpandableHoles && board.spawners.Count == 0 && board.barries.Count==0 && board.elevators.Count==0 &&
+                    !board.holes.Exists(h=>h.countdownMoves>0) &&
+                    (board.holes.Exists(h=>h.bombRemaining>0 || h.isPlug || h.isOpenClose) || board.plugs.Count>0))
+                {
+                    if (TryDecisionPlan())
+                    {
+                        result.status=SolveStatus.Solved;
+                        result.message="All playable holes finished and cats cleared.";
+                        return;
+                    }
+                }
+                if (hasExpandableHoles && TryExpandPlan())
+                {
+                    result.status=SolveStatus.Solved;
+                    result.message="All playable holes finished and cats cleared.";
+                    return;
+                }
+                if (board.elevators.Count>0 || board.barries.Count>0 || board.holes.Exists(h => h.countdownMoves > 0 || h.bombRemaining > 0 || h.isPlug || h.isOpenClose || ExpandGeometry.Enabled(h)) || board.spawners.Count > 0 || board.plugs.Count > 0) { SearchCountdownDrags(); return; }
+                // These events can unlock cells or change which holes may eat.
+                // Reconsider event choices before committing a greedy sequence.
+                // Existing 2.0 inputs retain their original entry policy.
+                if (!Cleared() && (board.holes.Exists(h => h.isPlug || h.isOpenClose || h.axe)
+                    || board.plugs.Count > 0 || board.fences.Count > 0 || board.covers.Exists(c => c.rope || c.finishHoleCounter)))
+                {
+                    TraceStage("event-decisions");
+                    if (TryDecisionPlan())
+                    {
+                        result.status = SolveStatus.Solved;
+                        result.message = "All playable holes finished and cats cleared.";
+                        return;
+                    }
+                }
+                RunOrdinaryPhases();
+            }
+
+            private void RunOrdinaryPhases()
+            {
                 while (!Cleared())
                 {
                     CheckBudget();
@@ -675,6 +784,7 @@ namespace CatDom.CoreSolver
             }
 
             private bool prioritizeRouteKeys;
+            private readonly bool shortRouteAccelerators;
             private void SearchRouteClearing()
             {
                 // Test direct consumption without ranking every parking endpoint.
@@ -735,9 +845,9 @@ namespace CatDom.CoreSolver
                         // the exhaustive arrangement traversal.
                         // Give DFS a turn before a failed wide beam spends the
                         // whole arrangement budget. Complete fallback remains.
-                        if (SearchRouteBeam(false, 128, PreferTargetCorridors() ? 4096 : 16384))
+                        if (SearchRouteBeam(false, 128, PreferTargetCorridors() || shortRouteAccelerators ? 4096 : 16384))
                             return;
-                        SearchRouteDepthFirst(12000);
+                        SearchRouteDepthFirst(shortRouteAccelerators ? 3000 : 12000);
                         if (best != null)
                             return;
                         bool hasLock = false;
@@ -762,7 +872,7 @@ namespace CatDom.CoreSolver
                             }
                         }
 
-                        if (best != null || SearchRouteBeam(true))
+                        if (best != null || SearchRouteBeam(true, workLimit: shortRouteAccelerators ? 4096 : 16384))
                             return;
                         if (SearchRouteDependencies(true))
                             return;
@@ -1457,7 +1567,9 @@ namespace CatDom.CoreSolver
             private long RankState(Positions state) => policy.Rank(this, state);
             internal void Replay(List<EngineMove> moves, bool auditRelaxedAssignment = false)
             {
+                RefreshElevators();
                 Consume();
+                RefreshBarries();
                 if (auditRelaxedAssignment && !HasRelaxedCatAssignment())
                     throw new ArgumentException("Relaxed assignment rejected the initial state of a replayable plan.");
                 if (auditRelaxedAssignment && !Cleared())
@@ -1473,13 +1585,25 @@ namespace CatDom.CoreSolver
 
                 foreach (var move in moves)
                 {
+                    var dragStart = current;
+                    var actualDragEaten = new List<EatEvent>();
                     CheckBudget();
                     int hole = board.holes.FindIndex(h => h.id == move.holeId);
-                    if (hole < 0 || current.GetValue(hole) < 0 || !move.start.Equals(CellAt(current.GetValue(hole))) || move.path.Count < 2 || !move.path[0].Equals(move.start))
+                    if (hole < 0 || current.GetValue(hole) < 0 || !move.start.Equals(CellAt(current.GetValue(hole))) || move.path.Count < 1 || (move.path.Count == 1 && board.spawners.Count == 0 && !Array.Exists(linkedGroups[hole],m=>ExpandGeometry.Enabled(board.holes[m]))) || !move.path[0].Equals(move.start))
                         throw new ArgumentException("Invalid replay move start/path.");
                     foreach (int member in linkedGroups[hole])
                         if (current.GetValue(member) >= 0 && !CanDrag(member, current.GetValue(member)))
                             throw new ArgumentException("Replay attempted to drag a locked/frozen/covered group.");
+                    bool expanding=Array.Exists(linkedGroups[hole],m=>ExpandGeometry.Enabled(board.holes[m]));
+                    if(expanding)
+                    {
+                        var pickupLayers=(int[])layers.Clone();
+                        actualDragEaten.AddRange(BeginExpandPickup(hole));
+                        if(move.path.Count>1)
+                            foreach(int member in linkedGroups[hole])
+                                if(dragStart.GetValue(member)>=0 && (current.GetValue(member)<0 || layers[member]!=pickupLayers[member]))
+                                    throw new ArgumentException("Replay moved after expand pickup finish/layer transition.");
+                    }
                     for (int step = 1; step < move.path.Count; step++)
                     {
                         Prepare();
@@ -1487,10 +1611,10 @@ namespace CatDom.CoreSolver
                         var to = move.path[step];
                         if (Math.Abs(from.x - to.x) + Math.Abs(from.y - to.y) != 1)
                             throw new ArgumentException("Replay path must use adjacent grid steps.");
-                        var occupied = Occupancy(current);
                         var group = linkedGroups[hole];
+                        var occupied = expanding ? OccupancyExcept(current,group) : Occupancy(current);
                         foreach (int member in group)
-                            if (current.GetValue(member) >= 0)
+                            if (!expanding && current.GetValue(member) >= 0)
                                 occupied ^= masks[member][current.GetValue(member)];
                         int dx = to.x - from.x, dy = to.y - from.y;
                         var next = (int[])current.values.Clone();
@@ -1509,13 +1633,22 @@ namespace CatDom.CoreSolver
 
                         var oldLayers = (int[])layers.Clone();
                         current = new Positions(next);
-                        Consume(hole);
+                        actualDragEaten.AddRange(Consume(hole));
                         if (step + 1 < move.path.Count)
                             foreach (int member in group)
                                 if (next[member] >= 0 && (current.GetValue(member) < 0 || oldLayers[member] != layers[member]))
                                     throw new ArgumentException("Replay continued after group finish/layer transition.");
                     }
 
+                    if(expanding){SetExpandGroup(hole,false);actualDragEaten.AddRange(Consume());}
+                    if (BombFailed()) throw new ArgumentException("Replay triggered hole bomb.");
+                    if (!ResolveCountdownDrag(hole, dragStart, actualDragEaten))
+                        throw new ArgumentException("Replay exhausted countdown before hole finish.");
+                    ResolveSpawnerRelease();
+                    actualDragEaten.AddRange(Consume());
+                    RefreshBarries();
+                    if(RefreshElevators())actualDragEaten.AddRange(Consume());
+                    if (BombFailed()) throw new ArgumentException("Spawner settlement triggered a hole bomb.");
                     if (move.expected != null && !Matches(move.expected, Snapshot()))
                         throw new ArgumentException("Replay mechanic snapshot differs from generated plan.");
                     if (auditRelaxedAssignment && !HasRelaxedCatAssignment())
@@ -1537,13 +1670,24 @@ namespace CatDom.CoreSolver
 
             private static bool Matches(BoardSnapshot a, BoardSnapshot b)
             {
-                if (a.holes.Count != b.holes.Count || a.remainingCatIds.Count != b.remainingCatIds.Count || a.boxes.Count != b.boxes.Count || a.cats.Count != b.cats.Count || a.covers.Count != b.covers.Count)
+                if(a.pendingEntityFlags.Count!=b.pendingEntityFlags.Count || a.elevatorCandidateStates.Count!=b.elevatorCandidateStates.Count)return false;
+                for(int i=0;i<a.pendingEntityFlags.Count;i++)if(a.pendingEntityFlags[i]!=b.pendingEntityFlags[i])return false;
+                for(int i=0;i<a.elevatorCandidateStates.Count;i++)if(a.elevatorCandidateStates[i]!=b.elevatorCandidateStates[i])return false;
+                if(a.barrieCellsBlocked.Count!=b.barrieCellsBlocked.Count)return false;
+                for(int i=0;i<a.barrieCellsBlocked.Count;i++)if(a.barrieCellsBlocked[i]!=b.barrieCellsBlocked[i])return false;
+                if (a.spawnerOffsets.Count != b.spawnerOffsets.Count || a.remainingPlugIds.Count != b.remainingPlugIds.Count || a.holes.Count != b.holes.Count || a.remainingCatIds.Count != b.remainingCatIds.Count || a.boxes.Count != b.boxes.Count || a.cats.Count != b.cats.Count || a.covers.Count != b.covers.Count || a.fenceEdgesBlocked.Count != b.fenceEdgesBlocked.Count)
                     return false;
+                for (int i = 0; i < a.spawnerOffsets.Count; i++)
+                    if (a.spawnerOffsets[i] != b.spawnerOffsets[i]) return false;
+                for (int i = 0; i < a.remainingPlugIds.Count; i++)
+                    if (a.remainingPlugIds[i] != b.remainingPlugIds[i]) return false;
+                for (int i = 0; i < a.fenceEdgesBlocked.Count; i++)
+                    if (a.fenceEdgesBlocked[i] != b.fenceEdgesBlocked[i]) return false;
                 for (int i = 0; i < a.holes.Count; i++)
                 {
                     var x = a.holes[i];
                     var y = b.holes[i];
-                    if (x.id != y.id || x.color != y.color || x.layer != y.layer || x.numIced != y.numIced || x.hiddenCount != y.hiddenCount || x.locked != y.locked || x.remaining != y.remaining || x.finished != y.finished || !x.position.Equals(y.position))
+                    if (x.id != y.id || x.color != y.color || x.layer != y.layer || x.numIced != y.numIced || x.hiddenCount != y.hiddenCount || x.expandPicked != y.expandPicked || x.pendingSpawn != y.pendingSpawn || x.isPlug != y.isPlug || x.locked != y.locked || x.closed != y.closed || x.countdownMoves != y.countdownMoves || x.bombRemaining != y.bombRemaining || x.movementType != y.movementType || x.movementTypeLimit != y.movementTypeLimit || x.runesealedUnlockHoleIndex != y.runesealedUnlockHoleIndex || x.remaining != y.remaining || x.finished != y.finished || !x.position.Equals(y.position))
                         return false;
                 }
 
@@ -1554,7 +1698,7 @@ namespace CatDom.CoreSolver
                     if (a.boxes[i].id != b.boxes[i].id || a.boxes[i].consumed != b.boxes[i].consumed || a.boxes[i].remainingHolesToUnlock != b.boxes[i].remainingHolesToUnlock)
                         return false;
                 for (int i = 0; i < a.cats.Count; i++)
-                    if (a.cats[i].id != b.cats[i].id || a.cats[i].numIced != b.cats[i].numIced)
+                    if (a.cats[i].id != b.cats[i].id || a.cats[i].numIced != b.cats[i].numIced || a.cats[i].mysteryBoxId != b.cats[i].mysteryBoxId)
                         return false;
                 for (int i = 0; i < a.covers.Count; i++)
                     if (a.covers[i].id != b.covers[i].id || a.covers[i].remainingHits != b.covers[i].remainingHits)
@@ -1564,15 +1708,16 @@ namespace CatDom.CoreSolver
 
             private bool Cleared()
             {
+                if(ElevatorPendingTargets())return false;
                 // Sand holes (color >= 1000) are movable blockers, not win targets.
                 for (int i = 0; i < board.holes.Count; i++)
-                    if (board.holes[i].color < 1000 && current.GetValue(i) >= 0)
+                    if (!ElevatorSkippedHole(i) && (board.holes[i].pendingSpawn || (board.holes[i].color < 1000 && current.GetValue(i) >= 0)))
                         return false;
                 foreach (bool alive in catsAlive)
                     if (alive)
                         return false;
                 for (int i = 0; i < boxOffsets.Length; i++)
-                    if (boxOffsets[i] < board.boxes[i].colors.Length)
+                    if (!board.boxes[i].pendingSpawn && boxOffsets[i] < board.boxes[i].colors.Length)
                         return false;
                 return true;
             }
@@ -1582,37 +1727,49 @@ namespace CatDom.CoreSolver
                 if (current == null)
                     return null;
                 var snapshot = new BoardSnapshot();
+                if(board.elevators.Count>0)
+                {
+                    snapshot.pendingEntityFlags.AddRange(SavePendingEntities());
+                    foreach(var plan in elevatorPlans)foreach(var c in plan.candidates)snapshot.elevatorCandidateStates.Add(c.state);
+                }
+                if(barrieBlocked!=null)foreach(var group in barrieBlocked)snapshot.barrieCellsBlocked.AddRange(group);
                 for (int i = 0; i < capacities.Length; i++)
-                    snapshot.holes.Add(new HoleSnapshot { id = board.holes[i].id, color = Color(i), layer = layers[i] + board.holes[i].layerOffset, numIced = board.holes[i].numIced, hiddenCount = board.holes[i].hiddenCount, locked = board.holes[i].locked, remaining = capacities[i], finished = current.GetValue(i) < 0, position = current.GetValue(i) < 0 ? new Cell(-1, -1) : CellAt(current.GetValue(i)) });
+                    snapshot.holes.Add(new HoleSnapshot { id = board.holes[i].id, color = Color(i), layer = layers[i] + board.holes[i].layerOffset, numIced = board.holes[i].numIced, hiddenCount = board.holes[i].hiddenCount, isPlug = board.holes[i].isPlug, locked = board.holes[i].locked, closed = board.holes[i].closed, countdownMoves = board.holes[i].countdownMoves, bombRemaining = board.holes[i].bombRemaining, movementType = board.holes[i].movementType, movementTypeLimit = board.holes[i].movementTypeLimit, runesealedUnlockHoleIndex = board.holes[i].runesealedUnlockHoleIndex, remaining = capacities[i], expandPicked = board.holes[i].expandPicked, pendingSpawn = board.holes[i].pendingSpawn, finished = !board.holes[i].pendingSpawn && current.GetValue(i) < 0, position = current.GetValue(i) < 0 ? new Cell(-1, -1) : CellAt(current.GetValue(i)) });
                 for (int i = 0; i < catsAlive.Length; i++)
                     if (catsAlive[i])
                     {
                         snapshot.remainingCatIds.Add(board.cats[i].id);
-                        snapshot.cats.Add(new CatSnapshot { id = board.cats[i].id, numIced = board.cats[i].numIced });
+                        snapshot.cats.Add(new CatSnapshot { id = board.cats[i].id, numIced = board.cats[i].numIced, mysteryBoxId = board.cats[i].mysteryBoxId });
                     }
 
                 for (int i = 0; i < boxOffsets.Length; i++)
                     snapshot.boxes.Add(new BoxSnapshot { id = board.boxes[i].id, consumed = boxOffsets[i], remainingHolesToUnlock = board.boxes[i].requiredHolesToUnlock });
                 foreach (var cover in board.covers)
                     snapshot.covers.Add(new CoverSnapshot { id = cover.id, remainingHits = cover.remainingHits });
+                foreach (var spawner in board.spawners) snapshot.spawnerOffsets.Add(spawner.consumed);
+                foreach (var plug in board.plugs) if (plug.alive) snapshot.remainingPlugIds.Add(plug.id);
+                foreach (var fence in board.fences) snapshot.fenceEdgesBlocked.Add(fence.blocked);
                 return snapshot;
             }
 
-            private List<EatEvent> Consume(int dragged = -1)
+            private List<EatEvent> Consume(int dragged = -1, bool selectedOnly = false)
             {
+#if CATDOM_PROFILE
+                using var profile=Profile("Consume");
+#endif
                 var events = new List<EatEvent>();
                 // OnDragUpdate resolves linked partners before the selected hole.
                 var order = new List<int>();
                 if (dragged >= 0)
                 {
                     foreach (int member in linkedGroups[dragged])
-                        if (member != dragged)
+                        if (!selectedOnly && member != dragged)
                             order.Add(member);
                     order.Add(dragged);
                 }
 
                 for (int i = 0; i < capacities.Length; i++)
-                    if (!order.Contains(i))
+                    if (!selectedOnly && !order.Contains(i))
                         order.Add(i);
                 bool changed;
                 do
@@ -1624,15 +1781,29 @@ namespace CatDom.CoreSolver
                         if (!CanDrop(i, current.GetValue(i)))
                             continue;
                         var mask = masks[i][current.GetValue(i)];
+                        if (board.holes[i].isPlug)
+                        {
+                            foreach (var plug in board.plugs)
+                                if (plug.alive && plug.color == board.holes[i].plugColorId && !(mask & Bit(plug.position)).IsZero)
+                                {
+                                    plug.alive = false;
+                                    InvalidatePhaseKey();
+                                    board.holes[i].isPlug = false;
+                                    changed = true;
+                                    break;
+                                }
+                            continue;
+                        }
                         int color = Color(i);
                         EatEvent eaten = null;
                         CatInput eatenCat = null;
                         // CheckDropCat visits local occupied cells in footprint order.
                         var origin = CellAt(current.GetValue(i));
-                        foreach (var local in board.holes[i].footprint)
+                        foreach (var local in Footprint(i))
                         {
-                            for (int c = 0; c < catsAlive.Length; c++)
-                                if (catsAlive[c] && board.cats[c].numIced == 0 && board.cats[c].color == color && board.cats[c].position.Equals(new Cell(origin.x + local.x, origin.y + local.y)))
+                            var occupiedCell = new Cell(origin.x + local.x, origin.y + local.y);
+                            int c = Inside(occupiedCell) ? catAtCell[Index(occupiedCell)] : -1;
+                            if (c >= 0 && catsAlive[c] && board.cats[c].numIced == 0 && board.cats[c].mysteryBoxId < 0 && board.cats[c].color == color)
                                 {
                                     catsAlive[c] = false;
                                     eatenCat = board.cats[c];
@@ -1651,7 +1822,7 @@ namespace CatDom.CoreSolver
 
                         if (eaten == null)
                             for (int sourceType = 0; sourceType < 2 && eaten == null; sourceType++)
-                                foreach (var local in board.holes[i].footprint)
+                                foreach (var local in Footprint(i))
                                 {
                                     for (int b = 0; b < boxOffsets.Length; b++)
                                         if (board.boxes[b].tower == (sourceType == 1) && BoxTouches(i, current.GetValue(i), b) && BoxTouchesCell(i, origin, local, board.boxes[b]))
@@ -1676,8 +1847,10 @@ namespace CatDom.CoreSolver
                         if (eaten == null)
                             continue;
                         events.Add(eaten);
+                        InvalidatePhaseKey();
                         capacities[i]--;
                         changed = true;
+                        int[] previousCovers = board.spawners.Count == 0 ? null : board.covers.ConvertAll(c=>c.remainingHits).ToArray();
                         CatFinished(eatenCat);
                         if (capacities[i] == 0)
                         {
@@ -1695,24 +1868,49 @@ namespace CatDom.CoreSolver
                             }
                         }
 
+                        if (previousCovers != null && !BombFailed())
+                            for (int coverIndex=0;coverIndex<previousCovers.Length;coverIndex++)
+                            {
+                                var cover=board.covers[coverIndex];
+                                bool gridChanged = cover.barricade ? cover.remainingHits<previousCovers[coverIndex] :
+                                    !cover.secretLockCounter && previousCovers[coverIndex]>0 && cover.remainingHits==0;
+                                if(gridChanged)ResolveSpawnerRelease();
+                            }
+                        if(board.elevators.Count>0 && !BombFailed())RefreshElevators(dragged);
                         break;
                     }
                 }
-                while (changed);
+                while (changed && !BombFailed());
                 return events;
             }
 
             private void CatFinished(CatInput cat)
             {
+                foreach (var barricade in board.covers)
+                    if (!barricade.pendingSpawn && barricade.barricade && barricade.remainingHits > 1)
+                    {
+                        barricade.remainingHits--;
+                        if (barricade.remainingHits == 1) barricade.remainingHits = 0;
+                    }
                 for (int i = 0; i < board.cats.Count; i++)
                     if (catsAlive[i] && board.cats[i].numIced > 0)
                         board.cats[i].numIced--;
                 for (int b = 0; b < board.boxes.Count; b++)
                     for (int c = boxOffsets[b]; c < board.boxes[b].cats.Length; c++)
-                        if (board.boxes[b].cats[c].numIced > 0)
+                        if (!board.boxes[b].pendingSpawn && board.boxes[b].cats[c].numIced > 0)
                             board.boxes[b].cats[c].numIced--;
                 if (cat == null)
                     return;
+                foreach (var requirement in board.covers)
+                    if (!requirement.pendingSpawn && requirement.secretLockCounter && requirement.color >= 0 && requirement.color == cat.color % 10 && requirement.remainingHits > 0)
+                        requirement.remainingHits--;
+                for (int c = 0; c < catsAlive.Length; c++)
+                    if (catsAlive[c] && board.cats[c].mysteryBoxId == cat.color % 10)
+                        board.cats[c].mysteryBoxId = -1;
+                for (int b = 0; b < boxOffsets.Length; b++)
+                    for (int c = boxOffsets[b]; c < board.boxes[b].cats.Length; c++)
+                        if (!board.boxes[b].pendingSpawn && board.boxes[b].cats[c].mysteryBoxId == cat.color % 10)
+                            board.boxes[b].cats[c].mysteryBoxId = -1;
                 if (cat.keyColorId >= 0)
                 {
                     int keys = 0;
@@ -1721,17 +1919,21 @@ namespace CatDom.CoreSolver
                             keys++;
                     for (int b = 0; b < boxOffsets.Length; b++)
                         for (int c = boxOffsets[b]; c < board.boxes[b].cats.Length; c++)
-                            if (board.boxes[b].cats[c].keyColorId == cat.keyColorId)
+                            if (!board.boxes[b].pendingSpawn && board.boxes[b].cats[c].keyColorId == cat.keyColorId)
                                 keys++;
                     if (keys == 0)
                         foreach (var h in board.holes)
-                            if (h.lockColorId == cat.keyColorId)
+                            if (!h.pendingSpawn && h.lockColorId == cat.keyColorId)
                                 h.locked = false;
                 }
 
+                if (cat.scissorsColorId >= 0)
+                    foreach (var rope in board.covers)
+                        if (!rope.pendingSpawn && rope.rope && rope.color == cat.scissorsColorId && rope.remainingHits > 0)
+                            rope.remainingHits--;
                 if (cat.pickaxeColorId >= 0)
                     foreach (var cover in board.covers)
-                        if (cover.remainingHits > 0)
+                        if (!cover.pendingSpawn && !cover.rope && !cover.finishHoleCounter && !cover.barricade && !cover.secretLockCounter && cover.remainingHits > 0)
                         {
                             cover.remainingHits--;
                             break;
@@ -1740,6 +1942,29 @@ namespace CatDom.CoreSolver
 
             private void HoleFinished(int source)
             {
+                for (int i = 0; i < board.holes.Count; i++)
+                    if (i != source && current.GetValue(i) >= 0 && board.holes[i].bombRemaining > 0)
+                    {
+                        if (--board.holes[i].bombRemaining == 0) board.holes[i].bombRemaining = -1;
+                    }
+                foreach (var area in board.covers)
+                    if (!area.pendingSpawn && area.finishHoleCounter && area.remainingHits > 0) area.remainingHits--;
+                for (int i = 0; i < board.holes.Count; i++)
+                    if (current.GetValue(i) >= 0 && board.holes[i].isOpenClose) board.holes[i].closed = !board.holes[i].closed;
+                if (board.holes[source].axe && board.holes[source].color >= 0 && board.fences.Count > 0)
+                    Fences.ReleaseColor(board.holes[source].color);
+                // OnFinishHole consumes axis counters for every surviving hole.
+                // Rune identity is the referenced object OR its type/base-color signature.
+                foreach (var h in board.holes)
+                {
+                    if (h.pendingSpawn) continue;
+                    if (h.movementType > 0 && h.movementTypeLimit > 0 && --h.movementTypeLimit == 0)
+                        h.movementType = 0;
+                    int target = h.runesealedUnlockHoleIndex;
+                    if (target >= 0 && (target == source ||
+                        board.holes[source].holeType == board.holes[target].holeType && board.holes[source].color % 10 == board.holes[target].color % 10))
+                        h.runesealedUnlockHoleIndex = -1;
+                }
                 for (int i = 0; i < board.holes.Count; i++)
                     if (i != source && current.GetValue(i) >= 0)
                     {
@@ -1750,13 +1975,19 @@ namespace CatDom.CoreSolver
                     }
 
                 foreach (var box in board.boxes)
-                    if (box.requiredHolesToUnlock > 0)
+                    if (!box.pendingSpawn && box.requiredHolesToUnlock > 0)
                         box.requiredHolesToUnlock--;
             }
 
             private void Prepare()
             {
+#if CATDOM_PROFILE
+                using var profile=Profile("Prepare");
+#endif
                 CheckBudget();
+                PrepareFenceStepCache();
+                string preparedKey=preparedCacheEnabled ? PreparedGeometryKey() : null;
+                if(preparedKey!=null && RestorePreparedPhase(preparedKey))return;
                 targetDistances = new Dictionary<long, int[]>();
                 catEntryBlocks = new int[capacities.Length][];
                 valid = new bool[capacities.Length][];
@@ -1787,17 +2018,29 @@ namespace CatDom.CoreSolver
                         continue;
                     }
 
-                    CellMask bad = CoverMask(), target = CellMask.Zero;
-                    bool canEat = board.holes[i].numIced == 0 && !board.holes[i].locked && board.holes[i].hiddenCount == 0;
+                    CellMask bad = CoverMask()|BarrieMask(), target = CellMask.Zero;
+                    if (ExpandGeometry.Enabled(board.holes[i]))
+                        foreach (var obstacle in board.obstacles) bad |= Bit(obstacle);
+                    foreach (var machine in board.spawners)
+                        if (Inside(machine.position) && (Occupancy(current) & Bit(machine.position)).IsZero) bad |= Bit(machine.position);
+                    bool canEat = !board.holes[i].isPlug && board.holes[i].numIced == 0 && !board.holes[i].locked && !board.holes[i].closed && board.holes[i].runesealedUnlockHoleIndex < 0 && board.holes[i].hiddenCount == 0;
                     for (int c = 0; c < catsAlive.Length; c++)
                         if (catsAlive[c])
                         {
-                            if (canEat && board.cats[c].numIced == 0 && board.cats[c].color == Color(i))
+                            if (canEat && board.cats[c].numIced == 0 && board.cats[c].mysteryBoxId < 0 && board.cats[c].color == Color(i))
                                 target |= catMasks[c];
                             else
                                 bad |= catMasks[c];
                         }
 
+                    foreach (var plug in board.plugs)
+                        if (plug.alive)
+                        {
+                            if (board.holes[i].isPlug && plug.color == board.holes[i].plugColorId)
+                                target |= Bit(plug.position);
+                            else bad |= Bit(plug.position);
+                        }
+                    bool canReceivePlug = board.holes[i].isPlug && CanDrop(i,current.GetValue(i));
                     valid[i] = new bool[count];
                     goals[i] = new bool[count];
                     distances[i] = new int[count];
@@ -1806,7 +2049,7 @@ namespace CatDom.CoreSolver
                     for (int p = 0; p < count; p++)
                     {
                         distances[i][p] = int.MaxValue;
-                        valid[i][p] = !masks[i][p].IsZero && (masks[i][p] & bad).IsZero;
+                        valid[i][p] = !masks[i][p].IsZero && (masks[i][p] & bad).IsZero && BarrieSwitchAllows(i,p) && (!board.holes[i].expandPicked || ExpandedInside(i,p));
                         if (valid[i][p])
                             foreach (var path in board.colorPaths)
                                 if (!(masks[i][p] & Bit(path.position)).IsZero && (Color(i) >= 1000 || Color(i) < 0 || board.holes[i].hiddenCount > 0 || Color(i) % 10 != path.color))
@@ -1815,7 +2058,7 @@ namespace CatDom.CoreSolver
                                     break;
                                 }
 
-                        goals[i][p] = valid[i][p] && canEat && !(masks[i][p] & target).IsZero;
+                        goals[i][p] = valid[i][p] && (canEat || canReceivePlug) && !(masks[i][p] & target).IsZero;
                         if (valid[i][p] && canEat && !goals[i][p])
                             for (int b = 0; b < boxOffsets.Length; b++)
                                 if (BoxTouches(i, p, b))
@@ -1845,7 +2088,8 @@ namespace CatDom.CoreSolver
                     }
                 }
 
-                routeFixedMask = ImmovableMask();
+                routeFixedMask = PreparedFixedMask();
+                if(preparedKey!=null)StorePreparedPhase(preparedKey);
             }
 
             private CellMask Occupancy(Positions state)
@@ -2051,7 +2295,9 @@ namespace CatDom.CoreSolver
             }
 
             // Necessary matching only: ignore other holes, cats, covers, gates,
-            // locks, ice, linked partners, queue order and layer order. Future
+            // locks, ice, queue order and layer order. Linked partners follow
+            // when their link cannot be released before the required cat.
+            // Expand/spawner inputs retain the wider geometry relaxation. Future
             // colors may be mixed along a path. Failure in this enlarged model
             // proves that a remaining cat cannot fit the available capacities.
             private bool HasRelaxedCatAssignment()
@@ -2067,6 +2313,8 @@ namespace CatDom.CoreSolver
                     return true;
                 var units = new List<(int hole, int color)>();
                 var reachable = new bool[capacities.Length][];
+                bool[][] linkedReach = null;
+                bool inspectLinks = (!hasExpandableHoles || expandAssignmentProbe) && board.spawners.Count == 0;
                 for (int i = 0; i < capacities.Length; i++)
                 {
                     CheckBudget();
@@ -2107,25 +2355,33 @@ namespace CatDom.CoreSolver
                         return false;
                     }
 
-                    var seen = new bool[count];
-                    var queue = new Queue<int>();
                     int origin = current.GetValue(i);
-                    seen[origin] = true;
-                    queue.Enqueue(origin);
-                    while (queue.Count > 0)
+                    bool[] Reach(bool allPartners)
                     {
-                        int p = queue.Dequeue();
-                        foreach (int q in neighbors[p])
-                            if (!seen[q] && CanStep(i, p, q) && Allowed(q))
-                            {
-                                seen[q] = true;
-                                queue.Enqueue(q);
-                            }
+                        var seen = new bool[count];
+                        var queue = new Queue<int>();
+                        seen[origin] = true;
+                        queue.Enqueue(origin);
+                        while (queue.Count > 0)
+                        {
+                            int p = queue.Dequeue();
+                            foreach (int q in neighbors[p])
+                                if (!seen[q] && CanStepForAssignment(i, p, q) && Allowed(q) && (!inspectLinks || AssignmentPartnersFollow(i, origin, p, q, allPartners)))
+                                {
+                                    seen[q] = true;
+                                    queue.Enqueue(q);
+                                }
+                        }
+
+                        return seen;
                     }
 
-                    reachable[i] = seen;
+                    reachable[i] = Reach(false);
+                    if (inspectLinks && linkedGroups[i].Length > 1)
+                        (linkedReach ??= new bool[capacities.Length][])[i] = Reach(true);
                 }
 
+                if (linkedReach != null) FreezeAssignmentLinks(pending, reachable, linkedReach);
                 if (units.Count < pending.Count)
                     return false;
                 var edges = new bool[pending.Count][];
@@ -2300,7 +2556,7 @@ namespace CatDom.CoreSolver
                     var copy = new List<Candidate>(cached.Length);
                     foreach (var move in cached)
                         copy.Add(new Candidate { hole = move.hole, destination = move.destination, state = move.state, pathParents = move.pathParents, pathLength = move.pathLength, terminal = move.terminal,
-                            routeContinuation = move.routeContinuation, consumptionUtility = move.consumptionUtility, futureRank = move.futureRank });
+                            routeContinuation = move.routeContinuation, consumptionUtility = move.consumptionUtility, futureRank = move.futureRank, curtainPriority=move.curtainPriority });
                     return copy;
                 }
 
@@ -2320,8 +2576,11 @@ namespace CatDom.CoreSolver
                 return moves;
             }
 
-            private List<Candidate> GenerateUncached(Positions state)
+            private List<Candidate> GenerateUncached(Positions state, int selectedHole = -1, bool duringDrag = false)
             {
+#if CATDOM_PROFILE
+                using var profile=Profile("GenerateUncached");
+#endif
                 var result = new List<Candidate>();
                 var occupied = Occupancy(state);
                 // Only parent trees escape through candidates. Queue entries and
@@ -2333,21 +2592,23 @@ namespace CatDom.CoreSolver
                 for (int i = 0; i < capacities.Length; i++)
                 {
                     CheckBudget();
+                    if (selectedHole >= 0 && i != selectedHole) continue;
                     int start = state.GetValue(i);
                     if (start < 0)
                         continue;
                     var group = linkedGroups[i];
                     bool draggable = true;
                     int representative = -1;
-                    var blocked = occupied;
+                    bool expandedGroup = hasExpandableHoles && Array.Exists(group,m=>board.holes[m].expandPicked);
+                    var blocked = expandedGroup ? OccupancyExcept(state,group) : occupied;
                     foreach (int member in group)
                         if (state.GetValue(member) >= 0)
                         {
                             if (representative < 0)
                                 representative = member;
-                            if (!CanDrag(member, state.GetValue(member)))
+                            if (!duringDrag && !CanDrag(member, state.GetValue(member)))
                                 draggable = false;
-                            blocked ^= masks[member][state.GetValue(member)];
+                            if (!expandedGroup) blocked ^= masks[member][state.GetValue(member)];
                         }
 
                     if (representative != i || !draggable)
@@ -2882,6 +3143,13 @@ namespace CatDom.CoreSolver
 
             private int CompareTerminal(Candidate a, Candidate b)
             {
+                if(preferBombEvents && HasActiveBomb())
+                {
+                    int bombOrder=BombEventPriority(a).CompareTo(BombEventPriority(b));
+                    if(bombOrder!=0)return bombOrder;
+                }
+                int curtainOrder=CurtainEventPriority(a).CompareTo(CurtainEventPriority(b));
+                if(curtainOrder!=0)return curtainOrder;
                 {
                     int utilityOrder = ConsumptionUtility(b).CompareTo(ConsumptionUtility(a));
                     if (utilityOrder != 0)
@@ -2917,6 +3185,21 @@ namespace CatDom.CoreSolver
                 {
                     current = move.state;
                     Consume(move.hole);
+                    if (BombFailed())
+                    {
+                        move.routeContinuation=false;
+                        return false;
+                    }
+                    // Future elevator holes/cats are absent from the active
+                    // assignment and progression model. It cannot prove a dead
+                    // end before birth; retain the event and use ordering only.
+                    if(ElevatorHasPendingCandidates())
+                    {
+                        Prepare();
+                        move.futureRank=DragRank(0);
+                        move.routeContinuation=true;
+                        return true;
+                    }
                     bool possible = Cleared();
                     if (possible)
                         move.futureRank = 0;
@@ -3049,29 +3332,84 @@ namespace CatDom.CoreSolver
 
             private string FullStateKey(bool includePositions = true)
             {
+#if CATDOM_PROFILE
+                using var profile=Profile("FullStateKey");
+#endif
+                if(fullDragSearchActive)
+                {
+                    if(includePositions)
+                    {
+                        FullStateKey(false);
+                        var compact=new System.Text.StringBuilder("P:");
+                        foreach(int position in current.values)compact.Append(position).Append(',');
+                        return compact.Append("F:").Append(cachedPhaseId).ToString();
+                    }
+                    if(cachedPhaseKey!=null)return cachedPhaseKey;
+                }
                 var key = new System.Text.StringBuilder();
                 for (int i = 0; i < capacities.Length; i++)
                 {
                     var h = board.holes[i];
                     if (includePositions)
                         key.Append(current.GetValue(i)).Append(',');
-                    key.Append(capacities[i]).Append(',').Append(layers[i]).Append(',').Append(h.numIced).Append(',').Append(h.hiddenCount).Append(',').Append(h.locked ? 1 : 0).Append(';');
+                    key.Append(capacities[i]).Append(',').Append(layers[i]).Append(',').Append(h.numIced).Append(',').Append(h.hiddenCount).Append(',').Append(h.locked ? 1 : 0).Append(',').Append(h.movementType).Append(',').Append(h.movementTypeLimit).Append(',').Append(h.runesealedUnlockHoleIndex).Append(',').Append(h.closed ? 1 : 0).Append(',').Append(h.countdownMoves).Append(',').Append(h.bombRemaining).Append(',').Append(h.isPlug ? 1 : 0).Append(',').Append(h.pendingSpawn ? 1 : 0).Append(',').Append(h.expandPicked ? 1 : 0).Append(';');
                 }
 
                 for (int i = 0; i < catsAlive.Length; i++)
-                    key.Append(catsAlive[i] ? 1 : 0).Append(',').Append(board.cats[i].numIced).Append(';');
+                    key.Append(catsAlive[i] ? 1 : 0).Append(',').Append(board.cats[i].numIced).Append(',').Append(board.cats[i].mysteryBoxId).Append(';');
                 for (int i = 0; i < boxOffsets.Length; i++)
                 {
                     key.Append(boxOffsets[i]).Append(',').Append(board.boxes[i].requiredHolesToUnlock).Append(':');
                     foreach (var cat in board.boxes[i].cats)
-                        key.Append(cat.numIced).Append(',');
+                        key.Append(cat.numIced).Append(',').Append(cat.mysteryBoxId).Append(',');
                     key.Append(';');
                 }
 
                 foreach (var cover in board.covers)
                     key.Append(cover.remainingHits).Append(';');
-                return key.ToString();
+                foreach (var fence in board.fences) key.Append(fence.blocked ? '1' : '0');
+                key.Append("|spawners:");
+                foreach (var spawner in board.spawners) key.Append(spawner.consumed).Append(',');
+                key.Append("|plugs:");
+                key.Append("|barrie:");
+                if(board.elevators.Count>0)
+                {
+                    key.Append("|pending:");
+                    foreach(var plan in elevatorPlans)foreach(var c in plan.candidates)key.Append(c.state).Append(',');
+                    foreach(var c in board.cats)key.Append(c.pendingSpawn?'1':'0');
+                    foreach(var b in board.boxes)key.Append(b.pendingSpawn?'1':'0');
+                    foreach(var p in board.plugs)key.Append(p.pendingSpawn?'1':'0');
+                    foreach(var c in board.covers)key.Append(c.pendingSpawn?'1':'0');
+                    foreach(var f in board.fences)key.Append(f.pendingSpawn?'1':'0');
+                }
+                if(barrieBlocked!=null)foreach(var group in barrieBlocked)foreach(bool blocked in group)key.Append(blocked?'1':'0');
+                foreach (var plug in board.plugs) key.Append(plug.alive ? '1' : '0');
+                string value=key.ToString();
+                if(fullDragSearchActive && !includePositions)
+                {
+                    cachedPhaseKey=value;
+                    if(!phaseKeyIds.TryGetValue(value,out cachedPhaseId))phaseKeyIds.Add(value,cachedPhaseId=phaseKeyIds.Count);
+                }
+                return value;
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Product = CatDom.CoreSolver;
 using Reference = CatDom.Reference.V42;
 
@@ -8,6 +9,21 @@ internal static class HybridTests
     {
         string json=File.ReadAllText(Path.Combine(root,"Levels/Level00001.json"));
         var original=Product.CatLevelSolver.SolveLevel(json);
+        // Ignored Cat timer data must preserve spatial results in both searches,
+        // including queued cats. Other unknown mechanics must remain rejected.
+        var timed=JObject.Parse(json);
+        foreach(var field in new[]{"catInfos", "catBoxInfos", "towerInfos"})
+            foreach(var item in timed[field] as JArray ?? new JArray())
+                foreach(var cat in field=="catInfos" ? new[]{item} : (item["colorIds"] as JArray ?? new JArray()).ToArray())
+                { cat["bonusTime"]=25; cat["timeLimited"]=1; }
+        foreach(long budget in new[]{10000L,1L})
+        {
+            var clean=Product.CatLevelSolver.SolveLevelWithProgress(json,CancellationToken.None,null,budget);
+            var skipped=Product.CatLevelSolver.SolveLevelWithProgress(timed.ToString(),CancellationToken.None,null,budget);
+            if(skipped.status!=clean.status || skipped.expanded!=clean.expanded ||
+               JsonConvert.SerializeObject(skipped.moves)!=JsonConvert.SerializeObject(clean.moves))
+                throw new Exception("Cat timer skip changed spatial solving");
+        }
         if(original.searchAlgorithm!="baseline"||original.improvedExpanded!=0||original.baselineExpanded!=original.expanded)
             throw new Exception("Baseline-only accounting failed");
         var exact=Product.CatLevelSolver.SolveLevelWithProgress(json,CancellationToken.None,null,original.expanded);
