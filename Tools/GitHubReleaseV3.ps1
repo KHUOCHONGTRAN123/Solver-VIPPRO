@@ -16,7 +16,7 @@ if($CheckOnly){Write-Output "GitHub access verified: $($repo.full_name), push pe
 $release=$null
 try{$release=Invoke-RestMethod -Uri "https://api.github.com/repos/$repository/releases/tags/v3.0.0" -Headers $headers}catch{if([int]$_.Exception.Response.StatusCode -ne 404){throw}}
 if(!$release){
-    $notes=Get-Content -LiteralPath (Join-Path $projectRoot 'docs/RELEASE_3.0.0.md') -Raw
+    $notes=[string](Get-Content -LiteralPath (Join-Path $projectRoot 'docs/RELEASE_3.0.0.md') -Raw)
     $body=@{tag_name='v3.0.0';name='CatDom Solver 3.0.0';body=$notes;draft=$false;prerelease=$false}|ConvertTo-Json
     $release=Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/$repository/releases" -Headers $headers -ContentType 'application/json' -Body ([Text.Encoding]::UTF8.GetBytes($body))
 }
@@ -40,4 +40,5 @@ foreach($file in $files){
 $record=@{url=$verified.html_url;tag=$verified.tag_name;assets=@($verified.assets | Select-Object name,size,browser_download_url,digest)}
 $record|ConvertTo-Json -Depth 6|Set-Content -LiteralPath (Join-Path $projectRoot 'docs/benchmarks/v3/github-release.json') -Encoding UTF8
 Write-Output "Published and verified: $($verified.html_url)"
+
 
